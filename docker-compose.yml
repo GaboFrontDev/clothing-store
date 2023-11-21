@@ -1,0 +1,36 @@
+version: '3'
+services:
+  frontend:
+    container_name: ${PROJECT_SLUG}_frontend
+    build:
+      context: .
+      dockerfile: ./docker/${ENVIRONMENT}/Dockerfile
+      args:
+        - NODE_ENV=${ENVIRONMENT}
+    restart: unless-stopped
+    networks:
+      - internal
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    env_file:
+      - ./.env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: postgres
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PORT: ${DATABASE_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      NODE_ENV: ${ENVIRONMENT}
+    ports:
+      - 3001:3000
+
+
+networks:
+  internal:
+    name: ${PROJECT_SLUG}_internal
+    driver: bridge
