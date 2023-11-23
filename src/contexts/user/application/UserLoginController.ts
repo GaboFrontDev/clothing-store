@@ -5,7 +5,7 @@ export class UserLoginController {
     constructor() {
     }
 
-    async login(data: LoginEntity): Promise<void> {
+    async login(data: LoginEntity) {
         const user = await UserRepository.getUserByEmail(data.email);
         const verified = await verifyPassword(
             {
@@ -25,11 +25,7 @@ export class UserLoginController {
             phone: user.phone,
             verified: user.verified,
         });
-        return new Promise<void>(() => { return token })
+        return token;
     }
 
-    logout(): Promise<void> {
-        return new Promise<void>(() => { })
-
-    }
 }
