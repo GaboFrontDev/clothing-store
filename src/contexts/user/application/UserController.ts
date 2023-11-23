@@ -1,6 +1,4 @@
-import { OrderEntity } from "@/contexts/order/domain/OrderEntity";
 import { UserEntity } from "../domain/UserEntity";
-import { authMiddleware } from "@/decorators/authorized";
 import { generateAuthenticationToken, generateHashPassword } from "./helpers/tokenUtils";
 import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
@@ -9,12 +7,6 @@ import UserRepository from "../infrastructure/UserRepository";
 
 export class UserController<Request> {
     constructor() {
-    }
-
-    @authMiddleware
-    getUserOrders(req: Request): Promise<OrderEntity> {
-        return new Promise<OrderEntity>(() => { })
-
     }
 
     async createUser(data: UserEntity): Promise<UserEntity> {

@@ -1,7 +1,7 @@
-import { ProductEntity } from "@/contexts/product/infrastructure/ProductEntity";
+import { ProductEntity } from "@/contexts/product/domain/ProductEntity";
 
 export interface OrderEntity {
     id: number;
-    product: ProductEntity;
+    products: ProductEntity[];
     amount: number
 }
