@@ -2,8 +2,29 @@ import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiReposit
 import { OrderEntity } from "../domain/OrderEntity";
 
 
-interface OrderRepository extends StrapiRepository<OrderEntity> {
-  getUserOrders(id: number): Promise<OrderEntity | null>;
+class OrderRepositoryClass extends StrapiRepository<OrderEntity> {
+  constructor() {
+    super("orders");
+  }
+
+  getOrdersByUserId(userId: string) {
+    return this.getByQuery(`?populate=*&filters[user][id][$eq]=${userId}`);
+  }
+
+  createNewOrder(data: OrderEntity) {
+    try {
+      const orderData = {
+        ...data,
+        products: [
+          ...data.products.map(product => product.id)
+        ]
+      }
+      this.create(JSON.stringify(orderData));
+    } catch (error) {
+
+    }
+  }
 }
 
+const OrderRepository = new OrderRepositoryClass();
 export default OrderRepository;
