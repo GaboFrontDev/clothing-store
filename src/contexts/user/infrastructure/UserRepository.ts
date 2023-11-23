@@ -1,7 +1,6 @@
 import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiRepository";
 import { UserEntity } from "../domain/UserEntity";
 import { sendVerificationEmail } from "../application/helpers/emailUtils";
-import { OrderEntity } from "@/contexts/order/domain/OrderEntity";
 
 
 class UserRepositoryClass extends StrapiRepository<UserEntity> {
