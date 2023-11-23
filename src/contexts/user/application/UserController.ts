@@ -5,7 +5,7 @@ import UserRepository from "../infrastructure/UserRepository";
 
 
 
-export class UserController<Request> {
+export class UserController {
     constructor() {
     }
 
