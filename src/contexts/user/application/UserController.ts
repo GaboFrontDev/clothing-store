@@ -45,7 +45,7 @@ export class UserController<Request> {
 
             return new Promise<UserEntity>(() => { })
         } catch (error) {
-            throw Error;
+            throw Error('Cannot create user');
         }
 
 
