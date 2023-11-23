@@ -6,16 +6,11 @@ const { login } = new UserLoginController();
 export async function loginUserAction(req: NextRequest) {
     try {
         const data = await req.json() as unknown as LoginEntity;
-        const user = await login(data) as any;
-        req.cookies.set('authentication_token', user)
+        const token = await login(data) as any;
+        req.cookies.set('authentication_token', token)
         return NextResponse.json(
             {
                 sucess: true,
-                result: {
-                    ...user,
-                    password: null,
-                },
-                message: "Verification email has been sent to your mail box"
             },
             {
                 status: 201,
