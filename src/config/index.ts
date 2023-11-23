@@ -1,7 +1,6 @@
 const CONFIG = {
-    DEPLOY_SERVER: process.env["DEPLOY_SERVER"],
-    JWT_SECRET: process.env["JWT_SECRET"] || "",
-  };
-  
-  export default CONFIG;
-  
+  JWT_SECRET: process.env["JWT_SECRET"] || "",
+  STRAPI_URL: process.env["STRAPI_URL"] || ""
+};
+
+export default CONFIG;
