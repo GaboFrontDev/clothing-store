@@ -8,4 +8,8 @@ export class PaymentController {
     async makePayment(data: PaymentStripePayloadEntity){
         PaymentRepository.doPayment()
     }
+
+    async processPayment(data: PaymentStripePayloadEntity){
+
+    }
 }
