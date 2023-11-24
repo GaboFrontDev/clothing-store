@@ -2,10 +2,16 @@ import { UserEntity } from "../domain/UserEntity";
 import { generateAuthenticationToken, generateHashPassword } from "./helpers/tokenUtils";
 import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
+import { sendVerificationEmail } from "../application/helpers/emailUtils";
 
 export class UserController {
     constructor() {
     }
+
+    private async sendVerificationEmail(email: string, token: string) {
+        return await sendVerificationEmail(email, token);
+      }
+    
 
     async createUser(data: UserEntity): Promise<UserEntity> {
         try {
@@ -31,13 +37,23 @@ export class UserController {
             const user = await UserRepository.createUser(userData);
             const checkToken = await generateAuthenticationToken(user.id);
             await UserRepository.updateAccountVerificationToken(checkToken, user.id);
-            await UserRepository.sendVerificationEmail(checkToken, user.email);
+            await this.sendVerificationEmail(checkToken, user.email);
 
             return new Promise<UserEntity>(() => { })
         } catch (error) {
             throw Error('Cannot create user');
         }
+    }
 
-
+    async updateUserData(data: UserEntity, id: string) {
+        try {
+            const userData = await UserRepository.getUserByEmail(data.email);
+            if(userData.id != id) { 
+                throw Error('Email is not the same from the original account');
+            }
+            UserRepository.updateAccountData(data)
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

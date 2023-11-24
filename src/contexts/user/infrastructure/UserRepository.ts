@@ -1,6 +1,5 @@
 import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiRepository";
 import { UserEntity } from "../domain/UserEntity";
-import { sendVerificationEmail } from "../application/helpers/emailUtils";
 
 
 class UserRepositoryClass extends StrapiRepository<UserEntity> {
@@ -27,10 +26,10 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
 
   }
 
-  async sendVerificationEmail(email: string, token: string) {
-    return await sendVerificationEmail(email, token);
+  async updateAccountData(data: UserEntity) {
+    const response = this.update(JSON.stringify(data), data.id);
+    return response;
   }
-
 }
 
 const UserRepository = new UserRepositoryClass();
