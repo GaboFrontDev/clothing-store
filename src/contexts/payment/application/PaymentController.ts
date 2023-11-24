@@ -7,4 +7,8 @@ export class PaymentController {
     async makePayment(data: PaymentStripePayloadEntity){
 
     }
+
+    async processPayment(data: PaymentStripePayloadEntity){
+
+    }
 }

@@ -3,8 +3,6 @@ import { generateAuthenticationToken, generateHashPassword } from "./helpers/tok
 import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
 
-
-
 export class UserController {
     constructor() {
     }
