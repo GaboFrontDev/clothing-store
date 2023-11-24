@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UserLoginController } from "../UserLoginController";
 
-const { login } = new UserLoginController();
+const { getLoginTokenOrFail: login } = new UserLoginController();
 
 export async function loginUserAction(req: NextRequest) {
     try {
