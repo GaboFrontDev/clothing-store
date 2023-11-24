@@ -2,9 +2,15 @@ import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiReposit
 import { PaymentEntity } from "../domain/PaymentEntity";
 
 class PaymentRepositoryClass extends StrapiRepository<PaymentEntity> {
-    constructor(){
-        super("payments");
-    }
+  constructor() {
+    super("payments");
+  }
+
+  doPayment() {}
+
+  storePayment(body: Omit<PaymentEntity, "id">) {
+    this.create(JSON.stringify(body));
+  }
 }
 
 const PaymentRepository = new PaymentRepositoryClass();

@@ -5,7 +5,7 @@ export class UserLoginController {
     constructor() {
     }
 
-    async login(data: LoginEntity) {
+    async getLoginTokenOrFail(data: LoginEntity) {
         const user = await UserRepository.getUserByEmail(data.email);
         const verified = await verifyPassword(
             {

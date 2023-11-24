@@ -1,7 +1,9 @@
 import { ProductEntity } from "@/contexts/product/domain/ProductEntity";
+import { UserEntity } from "@/contexts/user/domain/UserEntity";
 
 export interface OrderEntity {
-    id: number;
+    id: string;
     products: ProductEntity[];
-    amount: number
+    user_id: string;
+    amount: number;
 }
