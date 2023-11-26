@@ -9,7 +9,7 @@ export class StrapiRepository<T> {
     protected async get(query?:string): Promise<T[]> {
         const res = await fetch(`${this.endpoint}${query}` );
         if (!res.ok) {
-            throw new Error('Query failed');
+            throw new Error(`Query to ${this.endpoint} failed`);
         }
         return await res.json() as Promise<T[]>;
     }
@@ -17,7 +17,7 @@ export class StrapiRepository<T> {
     protected async getByQuery(query: string): Promise<T> {
         const res = await request(`${this.endpoint}?${query}`);
         if (!res.ok) {
-            throw new Error(`Query ${query} failed`);
+            throw new Error(`Query ${query} to ${this.endpoint} failed`);
         }
         return await res.json() as T;
     }
