@@ -1,5 +1,5 @@
 import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiRepository";
-import { UserEntity } from "../domain/UserEntity";
+import { UserEntity, UserPayloadEntity } from "../domain/UserEntity";
 
 
 class UserRepositoryClass extends StrapiRepository<UserEntity> {
@@ -26,8 +26,8 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
 
   }
 
-  async updateAccountData(data: UserEntity) {
-    const response = this.update(JSON.stringify(data), data.id);
+  async updateAccountData(data: UserPayloadEntity, id: string) {
+    const response = this.update(JSON.stringify(data), id);
     return response;
   }
 }

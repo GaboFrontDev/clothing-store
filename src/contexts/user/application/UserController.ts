@@ -1,4 +1,4 @@
-import { UserEntity } from "../domain/UserEntity";
+import { UserEntity, UserPayloadEntity } from "../domain/UserEntity";
 import { generateAuthenticationToken, generateHashPassword } from "./helpers/tokenUtils";
 import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
@@ -45,13 +45,14 @@ export class UserController {
         }
     }
 
-    async updateUserData(data: UserEntity, id: string) {
+    async updateUserData(data: UserPayloadEntity, id: string) {
+        
         try {
             const userData = await UserRepository.getUserByEmail(data.email);
             if(userData.id != id) { 
                 throw Error('Email is not the same from the original account');
             }
-            UserRepository.updateAccountData(data)
+            UserRepository.updateAccountData(data, id)
         } catch (error) {
             console.log(error);
         }
