@@ -4,4 +4,5 @@ export interface ProductEntity {
   id: string;
   collection: CollectionEntity;
   amount: number;
+  price: number;
 }
