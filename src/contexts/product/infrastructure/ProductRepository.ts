@@ -13,11 +13,11 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
   }
 
   async getById(id: string) {
-    return await this.get(`/${id}`);
+    return (await this.get(`/${id}`)).data;
   }
 
   async getAllProducts() {
-    return await this.get();
+    return (await this.get()).data;
   }
 
   async getProductsByCollectionId(collection_id: string) {
@@ -28,6 +28,7 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
       `?populate=*&filters${name}${field}[$eq]=${collection_id}`
     );
   }
+  
 }
 
 const ProductRepository = new ProductRepositoryClass();
