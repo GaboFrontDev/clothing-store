@@ -3,7 +3,7 @@ import { EMAIL_ERROR_RESPONSE } from "./emailExists";
 
 const verificationPage = "https://wwww.telluridedigitalworks.com/verified?token="
 
-export async function sendVerificationEmail(email: string, token: string) {
+export async function sendVerificationEmail(email: string, token: string, returnUrl = 'login') {
   try {
     const res = await new Promise<any>((resolve, reject) => {
       const ownerEmailPayload = {
@@ -12,7 +12,7 @@ export async function sendVerificationEmail(email: string, token: string) {
         subject: "Verify your email",
         text:
           "Please confirm your email by clicking on this link: \n" +
-          `<a href='${verificationPage}${token}'>${verificationPage}${token}</a> `,
+          `<a href='${verificationPage}${token}?from=${returnUrl}'>Verify my account</a> `,
       };
       const sendCallback = function (err: any) {
         if (err) {
