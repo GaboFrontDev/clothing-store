@@ -7,11 +7,11 @@ export class UserResetPasswordController<Request> {
     }
 
     @authMiddleware
-    async updateUserPassword(data: UserUpdatePasswordEntity) {
+    async updateUserPassword(req: Request, data: UserUpdatePasswordEntity) {
 
     }
 
-    async handleResetUserPassword(req: Request, email: string) {
+    async handleResetUserPassword(email: string) {
         try {
             const user = await UserRepository.getUserByEmail(email);
             
