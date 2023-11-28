@@ -13,7 +13,7 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
   }
 
   async getById(id: string) {
-    return (await this.get(`/${id}`)).data;
+    return (await this.getSingleItem(`/${id}`)).data;
   }
 
   async getAllProducts() {
@@ -29,6 +29,13 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
     );
   }
   
+
+  async updateProductAmount(id: string, amount: number){
+    const payload = JSON.stringify({
+      amount
+    })
+    this.update(payload, id)
+  }
 }
 
 const ProductRepository = new ProductRepositoryClass();
