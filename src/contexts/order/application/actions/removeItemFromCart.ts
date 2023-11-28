@@ -1,15 +1,15 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { OrderController } from "../OrderController";
-import { AddToCartPayloadEntity } from "../../domain/AddToCartPayloadEntity";
+import { RemoveFromCartPayloadEntity } from "../../domain/RemoveFromCartPayloadEntity";
 
-const { addToCart } = new OrderController<NextRequest>();
+const { removeFromCart } = new OrderController<NextRequest>();
 
-export async function addItemToCartAction(req: NextRequest) {
+export async function removeItemFromCartAction(req: NextRequest) {
     try {
-        const {cart, newProduct, amount} = (await req.json()) as AddToCartPayloadEntity ;
+        const {cart, productId, deleteAll = false} = (await req.json()) as RemoveFromCartPayloadEntity ;
         
-        const updatedCart = await addToCart(cart, newProduct, amount);
+        const updatedCart = await removeFromCart(cart, productId, deleteAll);
         return NextResponse.json(
             {
                 sucess: true,
