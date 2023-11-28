@@ -8,13 +8,13 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
   }
 
   async createUser(data: Omit<UserEntity, 'id'>): Promise<UserEntity> {
-    const response = this.create(JSON.stringify(data))
-    return response;
+    const response = await this.create(JSON.stringify(data))
+    return response.data.attributes;
   };
 
   async getUserByEmail(email: string): Promise<UserEntity> {
-    const response = await this.getByQuery(email);
-    return response;
+    const response = await this.getSingleItem(email);
+    return response.data.attributes;
   }
 
   async updateAccountVerificationToken(token: string, userId: string) {

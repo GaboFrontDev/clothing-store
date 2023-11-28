@@ -36,19 +36,19 @@ export class StrapiRepository<T> {
     }
 
 
-    protected async create(payload: string): Promise<StrapiPluralResponseEntity<T>> {
+    protected async create(payload: string): Promise<StrapiSingleItemResponseEntity<T>> {
         const res = await request(`${this.endpoint}`, 'POST', payload);
         if (!res.ok) {
             throw new Error('Create failed');
         }
-        return await res.json() as StrapiPluralResponseEntity<T>;
+        return await res.json() as StrapiSingleItemResponseEntity<T>;
     }
 
-    protected async update(payload: string, id: string): Promise<StrapiPluralResponseEntity<T>> {
+    protected async update(payload: string, id: string): Promise<StrapiSingleItemResponseEntity<T>> {
         const res = await request(`${this.endpoint}/${id}`, 'PUT', payload);
         if (!res.ok) {
             throw new Error('Update failed');
         }
-        return await res.json() as StrapiPluralResponseEntity<T>;
+        return await res.json() as StrapiSingleItemResponseEntity<T>;
     }
 }
