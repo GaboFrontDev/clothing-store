@@ -21,7 +21,7 @@ export function authMiddleware(target: any, propertyKey: string, descriptor: Pro
         const token = req.cookies.get('verify') as unknown as string;
         if (!token) {
             NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-            return
+            return;
         }
         const isAuthenticated = await isAuthorized(token);
 
