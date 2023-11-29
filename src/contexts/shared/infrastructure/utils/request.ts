@@ -1,6 +1,6 @@
 import CONFIG from "@/config";
 
-export function request(url: string, method: 'GET' | 'POST' | 'PUT' = 'GET', payload?: string, ) {
+export function strapiRequest(url: string, method: 'GET' | 'POST' | 'PUT' = 'GET', payload?: string, ) {
     const options = {
         method,
         headers: {

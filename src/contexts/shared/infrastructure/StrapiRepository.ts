@@ -1,6 +1,6 @@
 import { StrapiPluralResponseEntity } from "../domain/StrapiPluralResponseEntity";
 import { StrapiSingleItemResponseEntity } from "../domain/StrapiSingleItemResponseEntity";
-import { request } from "./utils/request";
+import { strapiRequest } from "./utils/request";
 
 export class StrapiRepository<T> {
     protected endpoint: string;
@@ -9,7 +9,7 @@ export class StrapiRepository<T> {
     }
 
     protected async get(query?:string): Promise<StrapiPluralResponseEntity<T>> {
-        const res = await fetch(`${this.endpoint}${query}` );
+        const res = await strapiRequest(`${this.endpoint}${query}` );
         if (!res.ok) {
             throw new Error(`Query to ${this.endpoint} failed`);
         }
@@ -20,7 +20,7 @@ export class StrapiRepository<T> {
         if(!query) {
             throw new Error(`Missing required query param`);
         }
-        const res = await fetch(`${this.endpoint}${query}` );
+        const res = await strapiRequest(`${this.endpoint}${query}`);
         if (!res.ok) {
             throw new Error(`Query to ${this.endpoint} failed`);
         }
@@ -28,7 +28,7 @@ export class StrapiRepository<T> {
     }
 
     protected async getByQuery(query: string): Promise<StrapiPluralResponseEntity<T>> {
-        const res = await request(`${this.endpoint}?${query}`);
+        const res = await strapiRequest(`${this.endpoint}?${query}`);
         if (!res.ok) {
             throw new Error(`Query ${query} to ${this.endpoint} failed`);
         }
@@ -37,7 +37,7 @@ export class StrapiRepository<T> {
 
 
     protected async create(payload: string): Promise<StrapiSingleItemResponseEntity<T>> {
-        const res = await request(`${this.endpoint}`, 'POST', payload);
+        const res = await strapiRequest(`${this.endpoint}`, 'POST', payload);
         if (!res.ok) {
             throw new Error('Create failed');
         }
@@ -45,7 +45,7 @@ export class StrapiRepository<T> {
     }
 
     protected async update(payload: string, id: string): Promise<StrapiSingleItemResponseEntity<T>> {
-        const res = await request(`${this.endpoint}/${id}`, 'PUT', payload);
+        const res = await strapiRequest(`${this.endpoint}/${id}`, 'PUT', payload);
         if (!res.ok) {
             throw new Error('Update failed');
         }
