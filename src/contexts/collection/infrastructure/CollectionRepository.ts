@@ -6,12 +6,12 @@ class CollectionRepositoryClass extends StrapiRepository<CollectionEntity> {
         super("collections");
     }
 
-    public getCollections() {
-        return this.get();
+    public async getCollections() {
+        return (await this.get()).data;
     }
 
-    public getByCollectionId(id: string) {
-        return this.get(`/${id}`);
+    public async getByCollectionId(id: string) {
+        return (await this.getSingleItem(`/${id}`)).data.attributes;
     }
 }
 
