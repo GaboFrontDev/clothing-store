@@ -1,4 +1,5 @@
 interface LoginEntity {
     email: string;
-    password: string
+    password: string;
+    user_id?: string;
 }
