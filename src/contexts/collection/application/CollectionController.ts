@@ -9,6 +9,10 @@ export class CollectionCotroller<Request> {
     getProductsInCollection(req: Request): Promise<CollectionEntity> {
 
         return new Promise<CollectionEntity>(() => { })
+    }
 
+
+    async getCollections() {
+        return await CollectionRepository.getCollections();
     }
 }
