@@ -31,8 +31,8 @@ export class OrderController<Request> {
       throw Error('Product not in cart');
     }
     if (deleteAll) {
+      updateProductAvailable(product, -cart.products[index].amount);
       cart.products.splice(index, 1);
-      updateProductAvailable(product, -cart.products.length);
       return 0;
     }
     cart.products[index].amount -= 1;
