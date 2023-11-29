@@ -6,13 +6,12 @@ export class CollectionCotroller<Request> {
     }
 
 
-    getProductsInCollection(req: Request): Promise<CollectionEntity> {
-
-        return new Promise<CollectionEntity>(() => { })
+    public async getProductsInCollection(collectionId: string) {
+        return (await CollectionRepository.getByCollectionId(collectionId)).products
     }
 
 
-    async getCollections() {
+    public async getCollections() {
         return await CollectionRepository.getCollections();
     }
 }
