@@ -3,11 +3,15 @@ import ProductRepository from "../infrastructure/ProductRepository";
 export class ProductController {
   constructor() {}
 
-  getProductsById(id: string) {
-    return ProductRepository.getById(id);
+  async getProductsById(id: string) {
+    return await ProductRepository.getById(id);
   }
 
-  getProducts() {
-    return ProductRepository.getAllProducts();
+  async getProductsByCategory(category: string) {
+    return await ProductRepository.getProductsByCategory(category);
+  }
+
+  async getProducts() {
+    return await ProductRepository.getAllProducts();
   }
 }

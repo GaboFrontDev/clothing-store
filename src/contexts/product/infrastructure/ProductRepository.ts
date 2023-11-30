@@ -7,6 +7,9 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
       name: "[collection]",
       field: "[id]",
     },
+    category: {
+      name: "[category]",
+    },
   };
   constructor() {
     super("products");
@@ -26,6 +29,15 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
     } = this.rels;
     return await this.getByQuery(
       `?populate=*&filters${name}${field}[$eq]=${collection_id}`
+    );
+  }
+  
+  async getProductsByCategory(category: string) {
+    const {
+      category: { name },
+    } = this.rels;
+    return await this.getByQuery(
+      `?populate=*&filters${name}[$eq]=${category}`
     );
   }
   

@@ -5,4 +5,5 @@ export interface ProductEntity {
   collection: CollectionEntity;
   amount: number;
   price: number;
+  category: string
 }
