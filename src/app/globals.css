@@ -5,14 +5,14 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: #e0d7cc;
-  --background-end-rgb: #7c6b3a;
+  --background-end-rgb: #f6f6f6;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: #e0d7cc;
     --background-start-rgb: #e0d7cc;
-    --background-end-rgb: #7c6b3a;
+    --background-end-rgb: #f6f6f6;
   }
 }
 
