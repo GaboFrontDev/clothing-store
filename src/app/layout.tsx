@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "react-modern-drawer/dist/index.css";
+
 import { Nav } from "@/components/Nav";
 import { NavDrawer } from "@/components/NavDrawer";
 import { SearchDrawer } from "@/components/SearchDrawer";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Paloma Hernandez",
@@ -16,11 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="px-6">
+      <body className="px-2 md:px-6">
         <Nav />
         {children}
-        <NavDrawer isOpen={false} toggle={() => ""} />
-        <SearchDrawer isOpen={false} toggle={() => ""} />
+        <NavDrawer />
+        <SearchDrawer />
+        <Footer />
       </body>
     </html>
   );
