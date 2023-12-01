@@ -4,15 +4,17 @@ export function strapiRequest(url: string, method: 'GET' | 'POST' | 'PUT' = 'GET
     const options = {
         method,
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
             Authorization: `Bearer ${CONFIG.STRAPI_TOKEN}`
         },
     };
     if(method === 'GET') {
+        console.log(`Calling GET: ${CONFIG.STRAPI_URL}/${url}`);        
         return fetch(`${CONFIG.STRAPI_URL}/${url}` , {
             ...options,
         });
     }
+    console.log(`Calling ${method}: ${CONFIG.STRAPI_URL}/${url}`);
     return fetch(url, {
         ...options,
         body: payload
