@@ -9,13 +9,13 @@ export default async function Home() {
     });
   }
   return (
-    <main className="flex flex-col items-center justify-between md:p-10 px-10">
+    <main className="flex flex-col items-center justify-between md:px-10 lg:px-16 px-10">
       {!("json" in response) && (
-        <div className="grid grid-cols-6 md:grid-rows-2 grid-rows-3">
+        <div className="grid grid-cols-6 grid-rows-2">
           {response[0].attributes.photos.data.map((photo, index) => {
             return (
               <div
-                className="first-of-type:col-span-6 md:first-of-type:col-span-4 md:col-span-2 col-span-3 first-of-type:row-span-2 row-span-1 flex justify-center items-center p-1"
+                className="first-of-type:col-span-6 col-span-3 first-of-type:row-span-2 row-span-1 flex justify-center items-center p-1"
                 key={`photo-${index}`}
               >
                 <div className="h-fit w-fit relative">

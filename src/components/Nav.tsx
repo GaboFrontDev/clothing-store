@@ -4,7 +4,7 @@ import { Routes } from "./Routes";
 
 export function Nav() {
   return (
-    <nav className="grid grid-cols-3 py-6">
+    <nav className="grid grid-cols-3 ">
       <section className="flex justify-start items-center">
         <div
           className="md:block h-fit hidden cursor-pointer p-2"
@@ -23,13 +23,13 @@ export function Nav() {
         <a
           title="home"
           href="/"
-          className="max-w-[200px] w-[15vw] min-w-[120px]"
+          className="max-w-[180px] w-[15vw] min-w-[120px]"
         >
           <Image
             alt="logo"
             src="/logo.webp"
-            width={200}
-            height={200}
+            width={180}
+            height={180}
             priority={true}
           />
         </a>
