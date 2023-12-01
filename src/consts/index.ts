@@ -15,7 +15,7 @@ export const ROUTES: Route[] = [
         url: '/products?category=bolsas'
     },
     {
-        displayValue: 'Conoce nuestra historia',
+        displayValue: 'Conóceme',
         url: '/about'
     },
 ]
