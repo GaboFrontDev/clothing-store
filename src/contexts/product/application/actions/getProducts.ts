@@ -3,9 +3,14 @@ import { ProductController } from "../ProductController";
 
 const { getProducts } = new ProductController();
 
-export async function getProductsAction(req: NextRequest) {
+export async function getProductsAction(
+  req?: NextRequest,
+) {
   try {
     const products = await getProducts();
+    if(!req) {
+      return products;
+    }
     return NextResponse.json(
       {
         sucess: true,
