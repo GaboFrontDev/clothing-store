@@ -1,8 +1,9 @@
 import { CollectionEntity } from "@/contexts/collection/domain/CollectionEntity";
+import { StrapiEntryEntity } from "@/contexts/shared/domain/StrapiEntity";
 import { StrapiMediaEntity } from "@/contexts/shared/domain/StrapiMediaEntity";
 
 export interface ProductEntity {
-  collection: CollectionEntity;
+  collection: StrapiEntryEntity<CollectionEntity>;
   amount: number;
   price: number;
   category: string;
