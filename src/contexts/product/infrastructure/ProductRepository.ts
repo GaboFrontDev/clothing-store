@@ -11,6 +11,7 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
       name: "[category]",
     },
   };
+
   constructor() {
     super("products");
   }
@@ -20,7 +21,7 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
   }
 
   async getAllProducts() {
-    return (await this.get()).data;
+    return (await this.get(`?populate=*`)).data;
   }
 
   async getProductsByCollectionId(collection_id: string) {
