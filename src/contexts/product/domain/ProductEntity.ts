@@ -6,5 +6,7 @@ export interface ProductEntity {
   amount: number;
   price: number;
   category: string;
-  photos: StrapiMediaEntity[]
+  photos: {
+    data: StrapiMediaEntity[];
+  };
 }
