@@ -30,7 +30,7 @@ export class UserController {
                 password: persisted.hash,
                 salt: persisted.salt,
                 verification_token: "",
-                user_account: user,
+                user_account: user.id,
             };
             const userCredentials = await UserCredentialsRepository.createUserCredentials(userCredentialsData);
             const checkToken = await generateAuthenticationToken(user.id as string);
