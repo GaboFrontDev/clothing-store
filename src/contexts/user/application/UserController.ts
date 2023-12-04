@@ -24,19 +24,19 @@ export class UserController {
                 throw Error("Verify your email address");
             }
 
-            const persisted = await generateHashPassword(authenticationData.password);
-            const user = await UserRepository.createUser(data);
-            const checkToken = await generateAuthenticationToken(user.id as string);
+            const { hash, salt } = await generateHashPassword(authenticationData.password);
+            const {id, attributes: userAttributes} = await UserRepository.createUser(data);
+            const verification_token = await generateAuthenticationToken(id as string);
             const userCredentialsData = {
-                password: persisted.hash,
-                salt: persisted.salt,
-                verification_token: checkToken,
-                user_account: user.id,
+                password: hash,
+                user_account: id,
+                verification_token,
+                salt
             };
             await UserCredentialsRepository.createUserCredentials(userCredentialsData);
-            await this.sendVerificationEmail(checkToken, user.attributes.email);
+            await this.sendVerificationEmail(verification_token, userAttributes.email);
 
-            return user.attributes;
+            return userAttributes;
         } catch (error) {
             throw Error('Cannot create user');
         }
