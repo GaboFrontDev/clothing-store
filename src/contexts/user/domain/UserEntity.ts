@@ -1,11 +1,12 @@
-export interface UserEntity extends UserPayloadEntity {
+import { StrapiEntryEntity } from "@/contexts/shared/domain/StrapiEntity"
+
+export interface UserCredentialsEntity {
     password: string,
     salt: string,
     verification_token?: string
-    id: string,
-    
+    user_account: StrapiEntryEntity<UserPayloadEntity>
 }
-export interface UserPayloadEntity { 
+export interface UserPayloadEntity {
     first_name: string,
     last_name: string,
     address: string,

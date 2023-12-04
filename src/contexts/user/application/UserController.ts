@@ -1,7 +1,8 @@
-import { UserEntity, UserPayloadEntity } from "../domain/UserEntity";
+import { UserCredentialsEntity, UserPayloadEntity } from "../domain/UserEntity";
 import { generateAuthenticationToken, generateHashPassword } from "./helpers/tokenUtils";
 import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
+import UserCredentialsRepository from "../infrastructure/UserCredentialsRepository";
 import { sendVerificationEmail } from "../application/helpers/emailUtils";
 
 export class UserController {
@@ -10,10 +11,10 @@ export class UserController {
 
     private async sendVerificationEmail(email: string, token: string) {
         return await sendVerificationEmail(email, token);
-      }
-    
+    }
 
-    async createUser(data: UserEntity): Promise<UserEntity> {
+
+    async createUser(data: UserPayloadEntity, authenticationData: Omit<UserCredentialsEntity, 'salt' | 'autentication_token'>): Promise<UserPayloadEntity> {
         try {
             const development = process.env["NODE_ENV"] == "development";
             const emailCheckResponse = emailResponseHandler(
@@ -23,36 +24,33 @@ export class UserController {
                 throw Error("Verify your email address");
             }
 
-            const persisted = await generateHashPassword(data.password);
-            const userData = {
+            const persisted = await generateHashPassword(authenticationData.password);
+            const user = await UserRepository.createUser(data);
+            const userCredentialsData = {
                 password: persisted.hash,
                 salt: persisted.salt,
-                email: data.email,
-                first_name: data.first_name.toLowerCase(),
-                last_name: data.last_name.toLowerCase(),
-                address: data.address.toLowerCase(),
-                phone: data.phone.toLowerCase(),
-                verified: false,
+                verification_token: "",
+                user_account: user,
             };
-            const user = await UserRepository.createUser(userData);
-            const checkToken = await generateAuthenticationToken(user.id);
-            await UserRepository.updateAccountVerificationToken(checkToken, user.id);
-            await this.sendVerificationEmail(checkToken, user.email);
+            const userCredentials = await UserCredentialsRepository.createUserCredentials(userCredentialsData);
+            const checkToken = await generateAuthenticationToken(user.id as string);
+            await UserRepository.updateAccountVerificationToken(checkToken, userCredentials.id as string);
+            await this.sendVerificationEmail(checkToken, user.attributes.email);
 
-            return new Promise<UserEntity>(() => { })
+            return user.attributes;
         } catch (error) {
             throw Error('Cannot create user');
         }
     }
 
     async updateUserData(data: UserPayloadEntity, id: string) {
-        
+
         try {
             const userData = await UserRepository.getUserByEmail(data.email);
-            if(userData.id != id) { 
+            if (userData.data.id != id) {
                 throw Error('Email is not the same from the original account');
             }
-            UserRepository.updateAccountData(data, id)
+            await UserRepository.updateAccountData(data, id);
         } catch (error) {
             console.log(error);
         }

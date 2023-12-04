@@ -1,20 +1,20 @@
 import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiRepository";
-import { UserEntity, UserPayloadEntity } from "../domain/UserEntity";
+import { UserPayloadEntity } from "../domain/UserEntity";
+import { StrapiSingleItemResponseEntity } from "@/contexts/shared/domain/StrapiSingleItemResponseEntity";
 
 
-class UserRepositoryClass extends StrapiRepository<UserEntity> {
+class UserRepositoryClass extends StrapiRepository<UserPayloadEntity> {
   constructor() {
-    super("users");
+    super("user");
   }
 
-  async createUser(data: Omit<UserEntity, 'id'>): Promise<UserEntity> {
+  async createUser(data: UserPayloadEntity) {
     const response = await this.create(JSON.stringify(data))
-    return response.data.attributes;
+    return response.data;
   };
 
-  async getUserByEmail(email: string): Promise<UserEntity> {
-    const response = await this.getSingleItem(email);
-    return response.data.attributes;
+  async getUserByEmail(email: string): Promise<StrapiSingleItemResponseEntity<UserPayloadEntity>> {
+    return await this.getSingleItem(email);;
   }
 
   async updateAccountVerificationToken(token: string, userId: string) {
