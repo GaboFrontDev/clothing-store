@@ -3,6 +3,8 @@ import { PhotoVisualize } from "./PhotoVisualize";
 
 export async function HomeGallery() {
   const products = await getProductsAction();
+  console.log(products);
+  
   if (!Array.isArray(products) || products.length < 1) {
     return <>
       Por favor, agrega productos a inventario
