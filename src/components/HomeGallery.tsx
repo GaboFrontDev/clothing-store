@@ -22,7 +22,10 @@ export async function HomeGallery() {
           >
             <div className="h-fit w-fit relative">
               <Overlay>
-                ${products[0].attributes.price}
+                <span className="text-[6pt] md:text-base">
+                  ${products[0].attributes.price}
+                </span>
+
               </Overlay>
               <div className="h-full w-full z-2">
                 <PhotoVisualize data={photo} size="small" />

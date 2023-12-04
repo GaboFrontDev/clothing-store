@@ -11,9 +11,7 @@ export function Overlay(props: OverlayProps) {
             className="hidden group-hover:flex transition-all  items-center bg-store-bg-100 px-2 py-1 mx-2"
             href=""
         >
-            <span className="text-[6pt] md:text-base">
-                {children}
-            </span>
+            {children}
         </a>
     </div>
 
