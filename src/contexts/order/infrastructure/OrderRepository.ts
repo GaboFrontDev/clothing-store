@@ -4,7 +4,7 @@ import { OrderEntity } from "../domain/OrderEntity";
 
 class OrderRepositoryClass extends StrapiRepository<OrderEntity> {
   constructor() {
-    super("orders");
+    super("order");
   }
 
   getOrdersByUserId(userId: string) {

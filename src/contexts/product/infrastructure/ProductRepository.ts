@@ -13,7 +13,7 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
   };
 
   constructor() {
-    super("products");
+    super("product");
   }
 
   async getById(id: string) {

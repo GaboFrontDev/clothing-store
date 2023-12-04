@@ -3,7 +3,7 @@ import { CollectionEntity } from "../domain/CollectionEntity";
 
 class CollectionRepositoryClass extends StrapiRepository<CollectionEntity> {
     constructor() {
-        super("collections");
+        super("collection");
     }
 
     public async getCollections() {
