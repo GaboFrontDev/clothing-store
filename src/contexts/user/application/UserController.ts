@@ -20,6 +20,7 @@ export class UserController {
             const emailCheckResponse = emailResponseHandler(
                 await isEmailValid(data.email)
             );
+
             if (!emailCheckResponse && !development) {
                 throw Error("Verify your email address");
             }
@@ -33,6 +34,7 @@ export class UserController {
                 verification_token,
                 salt
             };
+
             await UserCredentialsRepository.createUserCredentials(userCredentialsData);
             await this.sendVerificationEmail(verification_token, userAttributes.email);
 
