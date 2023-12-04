@@ -1,10 +1,11 @@
 import { getProductsAction } from "@/contexts/product/application/actions/getProducts";
 import { PhotoVisualize } from "./PhotoVisualize";
+import { Overlay } from "./Overlay";
 
 export async function HomeGallery() {
   const products = await getProductsAction();
   console.log(products);
-  
+
   if (!Array.isArray(products) || products.length < 1) {
     return <>
       Por favor, agrega productos a inventario
@@ -20,16 +21,9 @@ export async function HomeGallery() {
             key={`photo-${index}`}
           >
             <div className="h-fit w-fit relative">
-              <div className="group absolute h-full w-full hover:bg-gray-800 hover:bg-opacity-60 transition-colors flex flex-row justify-center items-center">
-                <a
-                  className="hidden group-hover:flex transition-all  items-center bg-store-bg-100 px-2 py-1 mx-2"
-                  href=""
-                >
-                  <span className="text-[6pt] md:text-base">
-                    ${products[0].attributes.price}
-                  </span>
-                </a>
-              </div>
+              <Overlay>
+                ${products[0].attributes.price}
+              </Overlay>
               <div className="h-full w-full z-2">
                 <PhotoVisualize data={photo} size="small" />
               </div>
