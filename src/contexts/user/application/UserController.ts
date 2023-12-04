@@ -26,15 +26,14 @@ export class UserController {
 
             const persisted = await generateHashPassword(authenticationData.password);
             const user = await UserRepository.createUser(data);
+            const checkToken = await generateAuthenticationToken(user.id as string);
             const userCredentialsData = {
                 password: persisted.hash,
                 salt: persisted.salt,
-                verification_token: "",
+                verification_token: checkToken,
                 user_account: user.id,
             };
-            const userCredentials = await UserCredentialsRepository.createUserCredentials(userCredentialsData);
-            const checkToken = await generateAuthenticationToken(user.id as string);
-            await UserRepository.updateAccountVerificationToken(checkToken, userCredentials.id as string);
+            await UserCredentialsRepository.createUserCredentials(userCredentialsData);
             await this.sendVerificationEmail(checkToken, user.attributes.email);
 
             return user.attributes;
