@@ -9,7 +9,7 @@ export class StrapiRepository<T> {
   }
 
   protected async get(query = ""): Promise<StrapiPluralResponseEntity<T>> {
-    const res = await strapiRequest(`${this.endpoint}${query}`);
+    const res = await strapiRequest(`${this.endpoint}s${query}`);
     if (!res.ok) {
       throw new Error(`${new Date()}: Query to ${this.endpoint} failed`);
     }
@@ -37,7 +37,7 @@ export class StrapiRepository<T> {
     if (!query) {
       throw new Error(`${new Date()}: Missing required query param`);
     }
-    const res = await strapiRequest(`${this.endpoint}?${query}`);
+    const res = await strapiRequest(`${this.endpoint}s?${query}`);
     if (!res.ok) {
       throw new Error(
         `${new Date()}: Query ${query} to ${this.endpoint} failed`
