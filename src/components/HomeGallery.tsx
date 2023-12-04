@@ -8,7 +8,7 @@ export async function HomeGallery() {
 
   if (!Array.isArray(products) || products.length < 1) {
     return <>
-      Por favor, agrega productos a inventario
+      Por favor, agrega productos a inventario en el administrador 🙊
     </>
   }
 
