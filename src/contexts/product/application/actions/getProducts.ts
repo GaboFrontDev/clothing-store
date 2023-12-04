@@ -5,7 +5,7 @@ const { getProducts } = new ProductController();
 
 export async function getProductsAction(req?: NextRequest) {
   try {
-    const products = await getProducts();    
+    const products = await getProducts();
     if (!req) {
       return products;
     }
@@ -21,6 +21,10 @@ export async function getProductsAction(req?: NextRequest) {
       }
     );
   } catch (error) {
+    if (!req) {
+      return [];
+    }
+
     return NextResponse.json(
       {
         sucess: false,
