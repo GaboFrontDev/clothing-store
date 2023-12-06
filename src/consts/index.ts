@@ -3,7 +3,7 @@ import { Route } from "./interfaces";
 
 export const ROUTES: Route[] = [
     {
-        displayValue: 'Basicos',
+        displayValue: 'Básicos',
         url: '/products?category=basicos'
     },
     {
