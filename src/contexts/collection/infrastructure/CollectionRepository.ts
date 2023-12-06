@@ -7,11 +7,11 @@ class CollectionRepositoryClass extends StrapiRepository<CollectionEntity> {
     }
 
     public async getCollections() {
-        return (await this.get()).data;
+        return (await this.get('?populate=*')).data;
     }
 
     public async getByCollectionId(id: string) {
-        return (await this.getSingleItem(`/${id}`)).data.attributes;
+        return (await this.getSingleItem(`s/${id}?populate=*`)).data;
     }
 }
 
