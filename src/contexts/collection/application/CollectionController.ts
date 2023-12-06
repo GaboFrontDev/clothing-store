@@ -7,7 +7,7 @@ export class CollectionCotroller<Request> {
 
 
     public async getProductsInCollection(collectionId: string) {
-        return (await CollectionRepository.getByCollectionId(collectionId)).products
+        return (await CollectionRepository.getByCollectionId(collectionId)).attributes.products
     }
 
 
