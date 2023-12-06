@@ -4,7 +4,6 @@ import { Overlay } from "./Overlay";
 
 export async function HomeGallery() {
   const products = await getProductsAction();
-  console.log(products);
 
   if (!Array.isArray(products) || products.length < 1) {
     return <>
