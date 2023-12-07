@@ -4,7 +4,7 @@ export interface UserCredentialsEntity {
     password: string,
     salt: string,
     verification_token?: string
-    user_account: StrapiEntryEntity<UserPayloadEntity> | string | number
+    user_account: StrapiEntryEntity<UserPayloadEntity>
 }
 export interface UserPayloadEntity {
     first_name: string,

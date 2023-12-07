@@ -15,7 +15,7 @@ export class CartController<Request> {
       product = await getProductById(newProductId);
       cart.products.push(product);
     }
-    cart.amount += product.attributes.price;
+    cart.payment_amount += product.attributes.price;
     updateProductAvailable(newProductId, amount);
     return cart;
   }
