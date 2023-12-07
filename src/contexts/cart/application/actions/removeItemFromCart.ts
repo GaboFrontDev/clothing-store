@@ -1,16 +1,16 @@
 
 import { NextRequest, NextResponse } from "next/server";
-import { OrderController } from "../OrderController";
+import { CartController } from "../CartController";
 import { RemoveFromCartPayloadEntity } from "../../domain/RemoveFromCartPayloadEntity";
 import { getProductById } from "../helpers/productsInventoryQueries";
 
-const { removeFromCart } = new OrderController<NextRequest>();
+const { removeFromCart } = new CartController<NextRequest>();
 
 export async function removeItemFromCartAction(req: NextRequest) {
     try {
         const {cart, productId, deleteAll = false} = (await req.json()) as RemoveFromCartPayloadEntity ;
         const product = await getProductById(productId);
-        const updatedCart = await removeFromCart(cart, product, deleteAll);
+        const updatedCart = await removeFromCart(cart, product.id as string, deleteAll);
         return NextResponse.json(
             {
                 sucess: true,

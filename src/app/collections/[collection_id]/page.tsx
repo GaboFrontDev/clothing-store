@@ -48,7 +48,7 @@ export default async function CollectionIdPage(
           (product, index) => (
             <div
               key={`product-${index}`}
-              className="col-span-1 rounded-lg overflow-hidden"
+              className="col-span-1 rounded-lg overflow-hidden m-3"
             >
               <a href={`${collection_id}/${product.id}`}>
                 <PhotoVisualize

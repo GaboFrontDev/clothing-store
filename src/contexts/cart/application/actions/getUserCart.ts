@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { CartEntity } from "../../domain/CartEntity";
+import { CartEntity } from "../../../order/domain/CartEntity";
 
 export async function getUserCartAction(req: NextRequest) {
   try {

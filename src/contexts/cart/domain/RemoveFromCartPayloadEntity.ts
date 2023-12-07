@@ -1,4 +1,4 @@
-import { CartEntity } from "./CartEntity";
+import { CartEntity } from "../../order/domain/CartEntity";
 
 export interface RemoveFromCartPayloadEntity {
     cart: CartEntity,
