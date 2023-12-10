@@ -1,4 +1,6 @@
+import Form from "@/components/Form";
 import ProductCard from "@/components/ProductCard";
+import Select from "@/components/Select";
 import { getProductsAction } from "@/contexts/product/application/actions/getProducts";
 import { getProductsByCategoryAction } from "@/contexts/product/application/actions/getProductsByCategory";
 
@@ -7,7 +9,6 @@ interface ProductPageParams {
     category: string;
   };
 }
-
 
 export default async function ProductsPage(props: ProductPageParams) {
   const {
@@ -18,7 +19,7 @@ export default async function ProductsPage(props: ProductPageParams) {
     products = await getProductsByCategoryAction(undefined, category);
   }
   products = await getProductsAction();
-  
+
   if (!Array.isArray(products)) {
     return <>No hay productos en inventario</>;
   }
@@ -26,21 +27,16 @@ export default async function ProductsPage(props: ProductPageParams) {
 
   return (
     <section>
-      <form className="block w-6/12">
-        <select
+      <Form className="block w-6/12">
+        <Select
           title="category"
           name="category"
           id="category"
           className="p-2 mb-6 text-sm border border-store-bg-100"
-        >
-          {categories.map((category, index) => (
-            <option key={`category-${index}`} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+          options={categories}
+        />
         <button type="submit">Buscar</button>
-      </form>
+      </Form>
       <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
         {products.map((product, index) => (
           <ProductCard
