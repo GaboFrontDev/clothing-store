@@ -1,3 +1,4 @@
+import Buttons from "@/components/Buttons";
 import Form from "@/components/Form";
 import ProductCard from "@/components/ProductCard";
 import Select from "@/components/Select";
@@ -35,7 +36,7 @@ export default async function ProductsPage(props: ProductPageParams) {
           className="p-2 mb-6 text-sm border border-store-bg-100"
           options={categories}
         />
-        <button type="submit">Buscar</button>
+        <Buttons.Button type="submit">Buscar</Buttons.Button>
       </Form>
       <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
         {products.map((product, index) => (
