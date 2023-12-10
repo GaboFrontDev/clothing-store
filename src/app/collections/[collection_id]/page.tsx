@@ -56,7 +56,7 @@ export default async function CollectionIdPage(
                     product.attributes.photos
                       .data[0]
                   }
-                  size="small"
+                  size="medium"
                 />
               </a>
               <section className="p-4 flex items-center flex-col border border-slate-500 border-t-0 rounded-b-lg">

@@ -6,7 +6,7 @@ interface NavigationButtonProps {
   className?: string;
 }
 
-const DEFAULT_CLASSES = "block hover:bg-store-bg-100 text-4xl bold";
+const DEFAULT_CLASSES = "block hover:bg-store-bg-100 text-4xl md:text-lg bold";
 
 export function NavigationButton(props: NavigationButtonProps) {
   const {
