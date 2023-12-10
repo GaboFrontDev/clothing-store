@@ -35,7 +35,7 @@ export default async function CollectionIdPage(
   }
 
   return (
-    <section>
+    <section className="min-h-[650px]">
       <h1 className="text-6xl pb-2">
         {collection.name}
       </h1>
@@ -48,7 +48,7 @@ export default async function CollectionIdPage(
           (product, index) => (
             <div
               key={`product-${index}`}
-              className="col-span-1 rounded-lg overflow-hidden m-3"
+              className="col-span-1 rounded-lg overflow-hidden md:m-3 m-1"
             >
               <a href={`${collection_id}/${product.id}`}>
                 <PhotoVisualize
