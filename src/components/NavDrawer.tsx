@@ -30,7 +30,7 @@ export function NavDrawer(props: NavDrawerProps) {
         className="w-full bg-store-bg-100"
         zIndex={1001}
       >
-        <section className="col-span-3 p-2 my-2">
+        <section className="col-span-3 p-2 my-2 flex flex-col justify-center h-full">
           <Routes />
         </section>
 
