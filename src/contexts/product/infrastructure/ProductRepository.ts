@@ -17,7 +17,7 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
   }
 
   async getById(id: string) {
-    return (await this.getSingleItem(`/${id}`)).data;
+    return (await this.getSingleItem(`s/${id}?populate=*`)).data;
   }
 
   async getAllProducts() {
