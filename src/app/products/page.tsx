@@ -11,20 +11,30 @@ interface ProductPageParams {
   };
 }
 
-export default async function ProductsPage(props: ProductPageParams) {
+export default async function ProductsPage(
+  props: ProductPageParams
+) {
   const {
     searchParams: { category },
   } = props;
-  let products = null;
-  if (category) {
-    products = await getProductsByCategoryAction(undefined, category);
-  }
-  products = await getProductsAction();
-
-  if (!Array.isArray(products)) {
+  const allProducts = await getProductsAction();
+  console.log(allProducts);
+  
+  if (!Array.isArray(allProducts)) {
     return <>No hay productos en inventario</>;
   }
-  const categories = products.map((product) => product.attributes.category);
+
+  const categories = Array.from(new Set(allProducts.map(
+    (product) => product.attributes.category
+  )));
+
+  let products = null;
+  if (category) {
+    products = await getProductsByCategoryAction(
+      undefined,
+      category
+    );
+  }
 
   return (
     <section>
@@ -35,17 +45,29 @@ export default async function ProductsPage(props: ProductPageParams) {
           id="category"
           className="p-2 mb-6 text-sm border border-store-bg-100"
           options={categories}
+          defaultValue={category}
         />
-        <Buttons.Button type="submit">Buscar</Buttons.Button>
+        <Buttons.Button type="submit">
+          Buscar
+        </Buttons.Button>
       </Form>
       <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
-        {products.map((product, index) => (
-          <ProductCard
-            key={`product-${index}`}
-            product={product}
-            href={`products/${product.id}`}
-          />
-        ))}
+        {!Array.isArray(products) ||
+          (!products.length && (
+            <>
+              No hay productos para la categoría
+              {category}
+            </>
+          ))}
+
+        {Array.isArray(products) &&
+          products.map((product, index) => (
+            <ProductCard
+              key={`product-${index}`}
+              product={product}
+              href={`products/${product.id}`}
+            />
+          ))}
       </div>
     </section>
   );
