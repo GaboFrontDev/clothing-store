@@ -1,5 +1,10 @@
 import Image from "next/image";
-import { ShoppingBag, Account, Search, Menu } from "@/components/Icon";
+import {
+  ShoppingBag,
+  Account,
+  Search,
+  Menu,
+} from "@/components/Icon";
 import { Routes } from "./Routes";
 
 export function Nav() {
@@ -37,7 +42,7 @@ export function Nav() {
       <section className="flex justify-end items-center">
         <div className="flex justify-evenly items-center w-fit">
           <div
-            className="h-fit w-fit cursor-pointer p-2 md:hidden flex "
+            className="h-fit w-fit cursor-pointer p-2 md:hidden flex"
             id="search-feature-mobile"
           >
             <Search />
@@ -45,8 +50,10 @@ export function Nav() {
           <div className="h-fit w-fit cursor-pointer p-2 hidden md:flex">
             <Account />
           </div>
-          <div className=" h-fit w-fit cursor-pointer p-2">
-            <ShoppingBag />
+          <div className="h-fit w-fit cursor-pointer p-2">
+            <a href="/cart">
+              <ShoppingBag />
+            </a>
           </div>
         </div>
       </section>
