@@ -21,7 +21,7 @@ export async function getProductsByCategoryAction(
     const products = await getProductsByCategory(category_value);
 
     if(!req) {
-      return products;
+      return products.data;
     }
     return NextResponse.json(
       {

@@ -38,7 +38,7 @@ class ProductRepositoryClass extends StrapiRepository<ProductEntity> {
       category: { name },
     } = this.rels;
     return await this.getByQuery(
-      `?populate=*&filters${name}[$eq]=${category}`
+      `?&filters${name}[$eq]=${category}&populate=*`
     );
   }
   
