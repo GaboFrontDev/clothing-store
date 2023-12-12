@@ -26,7 +26,11 @@ export class StrapiRepository<T> {
     }
     const res = await strapiRequest(`${this.endpoint}${query}`);
     if (!res.ok) {
-      throw new Error(`${new Date()}: Query to ${this.endpoint} failed`);
+      throw new Error(
+        `${new Date()}: Query to ${
+          this.endpoint
+        }${query} failed`
+      );
     }
     return (await res.json()) as Promise<StrapiSingleItemResponseEntity<T>>;
   }
