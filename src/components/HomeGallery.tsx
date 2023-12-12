@@ -11,8 +11,7 @@ export async function HomeGallery() {
   ) {
     return (
       <>
-        Por favor, agrega productos a inventario
-        en el administrador 🙊
+        Add products on the admin app 🙊
       </>
     );
   }
