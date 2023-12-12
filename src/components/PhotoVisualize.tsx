@@ -9,12 +9,13 @@ interface PhotoVisualizeProps {
 
 export function PhotoVisualize(props: PhotoVisualizeProps) {
   const { data, size } = props;
+  const imageData = data.attributes.formats[size] || data.attributes.formats['small'];
   return (
     <Image
-      src={`${CONFIG.STRAPI_URL_PAGE}${data.attributes.formats[size].url}`}
+      src={`${CONFIG.STRAPI_URL_PAGE}${imageData.url}`}
       alt={data.attributes.caption}
-      width={data.attributes.formats[size].width}
-      height={data.attributes.formats[size].height}
+      width={imageData.width}
+      height={imageData.height}
     />
   );
 }
