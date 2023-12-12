@@ -55,8 +55,7 @@ export default async function ProductsPage(
         {!Array.isArray(products) ||
           (!products.length && (
             <>
-              No hay productos para la categoría
-              {category}
+              No hay productos para la categoría {category}
             </>
           ))}
 
