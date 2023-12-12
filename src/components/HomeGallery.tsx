@@ -9,11 +9,7 @@ export async function HomeGallery() {
     !Array.isArray(products) ||
     products.length < 1
   ) {
-    return (
-      <>
-        Add products on the admin app 🙊
-      </>
-    );
+    return <>Add products on the admin app 🙊</>;
   }
 
   return (
@@ -22,7 +18,7 @@ export async function HomeGallery() {
         (photo, index) => {
           return (
             <div
-              className="md:col-span-2 md:first-of-type:col-span-2 first-of-type:col-span-6 col-span-3 row-span-1 flex justify-center items-center p-1"
+              className="first-of-type:col-span-6 col-span-3 row-span-1 flex justify-center items-center p-1"
               key={`photo-${index}`}
             >
               <div className="h-fit w-fit relative">
