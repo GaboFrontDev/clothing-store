@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { CartEntity } from "../../../order/domain/CartEntity";
+import { CartEntity } from "../../domain/CartEntity";
 
 export async function createUserCartActions(req: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function createUserCartActions(req: NextRequest) {
     const userCart = req.cookies.set(
       "user_cart",
       JSON.stringify({
-        amount: 0,
+        payment_amount: 0,
         products: [],
         user_id: authData.user_id,
       } as CartEntity)
