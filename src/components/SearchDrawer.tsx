@@ -27,7 +27,7 @@ export function SearchDrawer() {
         className="w-full bg-black"
         zIndex={1001}
       >
-        Hi
+        Feature in progress.
       </Drawer>}
     </>
   );
