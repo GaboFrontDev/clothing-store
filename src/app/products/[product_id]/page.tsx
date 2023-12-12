@@ -1,3 +1,4 @@
+import AddToCartButton from "@/components/AddToCartButton";
 import Buttons from "@/components/Buttons";
 import Carousel from "@/components/Carousel";
 import { getProductById } from "@/contexts/cart/application/helpers/productsInventoryQueries";
@@ -43,12 +44,7 @@ export default async function ProductIdPage(
           </p>
         </div>
         <div className="w-full">
-          <Buttons.Link
-            href=""
-            className=" text-center border-2 border-emerald-800 active:bg-emerald-800 active:text-white hover:bg-emerald-800 hover:text-white rounded-md px-2 block md:inline-block"
-          >
-            Add to cart
-          </Buttons.Link>
+          <AddToCartButton productId={product_id} />
         </div>
       </section>
     </section>

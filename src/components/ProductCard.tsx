@@ -2,6 +2,7 @@ import { ProductEntity } from "@/contexts/product/domain/ProductEntity";
 import { StrapiEntryEntity } from "@/contexts/shared/domain/StrapiEntity";
 import { PhotoVisualize } from "./PhotoVisualize";
 import Buttons from "./Buttons";
+import AddToCartButton from "./AddToCartButton";
 
 interface ProductCardProps {
   product: StrapiEntryEntity<ProductEntity>;
@@ -22,12 +23,7 @@ export default function ProductCard(props: ProductCardProps) {
       <section className="p-4 flex items-center flex-col border border-slate-500 border-t-0 rounded-b-lg">
         <p>{product.attributes.name}</p>
         <p>${product.attributes.price} MXN</p>
-        <Buttons.Link
-          href=""
-          className="border-2 border-emerald-800 active:bg-emerald-800 active:text-white hover:bg-emerald-800 hover:text-white rounded-md px-2"
-        >
-          Add to cart
-        </Buttons.Link>
+        <AddToCartButton productId={product.id} />
       </section>
     </div>
   );

@@ -1,3 +1,4 @@
+import AddToCartButton from "@/components/AddToCartButton";
 import Buttons from "@/components/Buttons";
 import Carousel from "@/components/Carousel";
 import { getProductById } from "@/contexts/cart/application/helpers/productsInventoryQueries";
@@ -21,7 +22,12 @@ export default async function CollectionProductIdPage(
 
   return (
     <>
-      <Buttons.Link href={`/collections/${collection_id}`} className="bg-transparent">Go back</Buttons.Link>
+      <Buttons.Link
+        href={`/collections/${collection_id}`}
+        className="bg-transparent"
+      >
+        Go back
+      </Buttons.Link>
 
       <section className="my-6 md:flex">
         <section className="md:max-w-[40vw]">
@@ -50,12 +56,9 @@ export default async function CollectionProductIdPage(
               )}
             </p>
           </div>
-          <Buttons.Link
-            href=""
-            className=" text-center border-2 border-emerald-800 active:bg-emerald-800 active:text-white hover:bg-emerald-800 hover:text-white rounded-md px-2 block md:inline-block"
-          >
-            Add to cart
-          </Buttons.Link>
+          <AddToCartButton
+            productId={product.id}
+          />
         </section>
       </section>
     </>
