@@ -19,14 +19,18 @@ export default async function ProductsPage(
   } = props;
   const allProducts = await getProductsAction();
   console.log(allProducts);
-  
+
   if (!Array.isArray(allProducts)) {
     return <>No hay productos en inventario</>;
   }
 
-  const categories = Array.from(new Set(allProducts.map(
-    (product) => product.attributes.category
-  )));
+  const categories = Array.from(
+    new Set(
+      allProducts.map(
+        (product) => product.attributes.category
+      )
+    )
+  );
 
   let products = null;
   if (category) {
@@ -55,7 +59,8 @@ export default async function ProductsPage(
         {!Array.isArray(products) ||
           (!products.length && (
             <>
-              No hay productos para la categoría {category}
+              No hay productos para la categoría{" "}
+              {category}
             </>
           ))}
 
