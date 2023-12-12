@@ -11,12 +11,28 @@ export default async function CollectionsPage() {
     }
 
 
-    return <section className="grid grid-cols-2 md:grid-cols-3 grid-rows-1">
-        {collections.map((collection, index) =>
-            <a href={`/collections/${collection.id}`} key={`collection-${index}`} className="col-span-1 cursor-pointer p-2">
-                <PhotoVisualize data={collection.attributes.collection_photo.data[0]} size="small" />
-                <p className="text-center">{collection.attributes.name}</p>
-            </a>
-        )}
-    </section>
+    return (
+      <section className="grid grid-cols-2 md:grid-cols-3 grid-rows-1">
+        {collections.map((collection, index) => (
+          <a
+            href={`/collections/${collection.id}`}
+            key={`collection-${index}`}
+            className="col-span-1 cursor-pointer p-2"
+          >
+            <div className="rounded-lg overflow-hidden">
+              <PhotoVisualize
+                data={
+                  collection.attributes
+                    .collection_photo.data[0]
+                }
+                size="small"
+              />
+            </div>
+            <p className="text-center">
+              {collection.attributes.name}
+            </p>
+          </a>
+        ))}
+      </section>
+    );
 }
