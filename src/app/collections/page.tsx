@@ -19,15 +19,17 @@ export default async function CollectionsPage() {
             key={`collection-${index}`}
             className="col-span-1 cursor-pointer p-2"
           >
-            <div className="rounded-lg overflow-hidden">
-              <PhotoVisualize
-                data={
-                  collection.attributes
-                    .collection_photo.data[0]
-                }
-                size="small"
-              />
-            </div>
+            <section className="min-h-[250px] flex flex-col justify-center">
+              <div className="rounded-lg overflow-hidden">
+                <PhotoVisualize
+                  data={
+                    collection.attributes
+                      .collection_photo.data[0]
+                  }
+                  size="small"
+                />
+              </div>
+            </section>
             <p className="text-center">
               {collection.attributes.name}
             </p>
