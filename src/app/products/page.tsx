@@ -34,7 +34,7 @@ export default async function ProductsPage(
   );
 
   let products = null;
-  if (category) {
+  if (category && category !== "all") {
     products = await getProductsByCategoryAction(
       undefined,
       category
@@ -52,7 +52,7 @@ export default async function ProductsPage(
           name="category"
           id="category"
           className="p-2 mb-6 text-sm border border-store-bg-100"
-          options={categories}
+          options={["all", ...categories]}
           defaultValue={category}
         />
         <Buttons.Button type="submit">
@@ -60,7 +60,7 @@ export default async function ProductsPage(
         </Buttons.Button>
       </Form>
 
-      {!category && (
+      {!category || category && category === "all" && (
         <>
           <p>Showing all products</p>
           <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
@@ -77,7 +77,7 @@ export default async function ProductsPage(
           </div>
         </>
       )}
-      {category && (
+      {category && category !== "all" && (
         <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
           {!Array.isArray(products) ||
             (!products.length && (
