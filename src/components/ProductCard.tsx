@@ -17,7 +17,7 @@ export default function ProductCard(props: ProductCardProps) {
     <div className="col-span-1  md:m-3 m-1">
       <a
         href={href}
-        className="min-h-[250px] flex flex-col justify-center"
+        className="md:min-h-[250px] lg:md:min-h-[350px] flex flex-col justify-center"
       >
         <div className="rounded-lg overflow-hidden">
           <PhotoVisualize

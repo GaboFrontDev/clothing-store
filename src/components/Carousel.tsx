@@ -94,7 +94,8 @@ export default function Carousel(
         >
           <ArrowLeft />
         </Buttons.Button>
-        {currentStep + 1}/{images.length}
+        <span className="px-3">{currentStep + 1}</span>/{" "}
+        <span className="px-3">{images.length}</span>
         <Buttons.Button
           onClick={(event) =>
             scrollToRight(event as any)

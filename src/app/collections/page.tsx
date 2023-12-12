@@ -19,7 +19,7 @@ export default async function CollectionsPage() {
             key={`collection-${index}`}
             className="col-span-1 cursor-pointer p-2"
           >
-            <section className="min-h-[250px] flex flex-col justify-center">
+            <section className="md:min-h-[250px] lg:md:min-h-[350px] flex flex-col justify-center">
               <div className="rounded-lg overflow-hidden">
                 <PhotoVisualize
                   data={
