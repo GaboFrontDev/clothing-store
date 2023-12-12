@@ -18,10 +18,11 @@ export default async function ProductsPage(
     searchParams: { category },
   } = props;
   const allProducts = await getProductsAction();
-  console.log(allProducts);
 
   if (!Array.isArray(allProducts)) {
-    return <>No hay productos en inventario</>;
+    return (
+      <>We don&apos;t have any product in store</>
+    );
   }
 
   const categories = Array.from(
@@ -43,6 +44,9 @@ export default async function ProductsPage(
   return (
     <section>
       <Form className="block w-6/12">
+        <label htmlFor="category">
+          Search for category:{" "}
+        </label>
         <Select
           title="category"
           name="category"
@@ -52,27 +56,46 @@ export default async function ProductsPage(
           defaultValue={category}
         />
         <Buttons.Button type="submit">
-          Buscar
+          Search
         </Buttons.Button>
       </Form>
-      <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
-        {!Array.isArray(products) ||
-          (!products.length && (
-            <>
-              No hay productos para la categoría{" "}
-              {category}
-            </>
-          ))}
 
-        {Array.isArray(products) &&
-          products.map((product, index) => (
-            <ProductCard
-              key={`product-${index}`}
-              product={product}
-              href={`products/${product.id}`}
-            />
-          ))}
-      </div>
+      {!category && (
+        <>
+          <p>Showing all products</p>
+          <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
+            {Array.isArray(allProducts) &&
+              allProducts.map(
+                (product, index) => (
+                  <ProductCard
+                    key={`product-${index}`}
+                    product={product}
+                    href={`products/${product.id}`}
+                  />
+                )
+              )}
+          </div>
+        </>
+      )}
+      {category && (
+        <div className="min-h-[500px] grid grid-cols-2 md:grid-cols-3">
+          {!Array.isArray(products) ||
+            (!products.length && (
+              <>
+                There are 0 products for category{" "}
+                {category}
+              </>
+            ))}
+          {Array.isArray(products) &&
+            products.map((product, index) => (
+              <ProductCard
+                key={`product-${index}`}
+                product={product}
+                href={`products/${product.id}`}
+              />
+            ))}
+        </div>
+      )}
     </section>
   );
 }
