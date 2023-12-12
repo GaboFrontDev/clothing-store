@@ -20,18 +20,22 @@ export async function HomeGallery() {
             key={`photo-${index}`}
           >
             <div className="h-fit w-fit relative">
-              <Overlay>
+              <Overlay
+                href={`/products/${products[0].id}`}
+              >
                 <span className="text-[6pt] md:text-base">
                   ${products[0].attributes.price}
                 </span>
-
               </Overlay>
               <div className="h-full w-full z-2">
-                <PhotoVisualize data={photo} size="small" />
+                <PhotoVisualize
+                  data={photo}
+                  size="small"
+                />
               </div>
             </div>
           </div>
-        )
+        );
       })
       }
     </div>
