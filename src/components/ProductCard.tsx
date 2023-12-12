@@ -7,10 +7,11 @@ import AddToCartButton from "./AddToCartButton";
 interface ProductCardProps {
   product: StrapiEntryEntity<ProductEntity>;
   href: string;
+  showAddToCart?: boolean
 }
 
 export default function ProductCard(props: ProductCardProps) {
-  const { product, href } = props;
+  const { product, href, showAddToCart = true } = props;
 
   return (
     <div className="col-span-1 rounded-lg overflow-hidden md:m-3 m-1">
@@ -23,7 +24,7 @@ export default function ProductCard(props: ProductCardProps) {
       <section className="p-4 flex items-center flex-col border border-slate-500 border-t-0 rounded-b-lg">
         <p>{product.attributes.name}</p>
         <p>${product.attributes.price} MXN</p>
-        <AddToCartButton productId={product.id} />
+        {showAddToCart && <AddToCartButton productId={product.id} />}
       </section>
     </div>
   );
