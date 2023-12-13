@@ -22,9 +22,7 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
 
   async getUserByEmail(
     email: string
-  ): Promise<
-    StrapiSingleItemResponseEntity<UserEntity>
-  > {
+  ) {
     return await this.getSingleItem(email);
   }
 
