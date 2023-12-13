@@ -22,6 +22,11 @@ export async function sendVerificationEmail(email: string, token: string, return
         }
         resolve(true);
       };
+      console.log(
+        `Sending email ${JSON.stringify(
+          ownerEmailPayload
+        )}`
+      );
       transporter.sendMail(ownerEmailPayload, sendCallback);
     });
     return res;

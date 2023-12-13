@@ -1,14 +1,16 @@
 import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiRepository";
-import { UserCredentialsEntity } from "../domain/UserEntity";
+import { UserCredentialsEntity, UserCredentialsPayloadEntity } from "../domain/UserEntity";
 
 
 class UserCredentialsRepositoryClass extends StrapiRepository<UserCredentialsEntity> {
   constructor() {
-    super("users-credential");
+    super("user-credential");
   }
 
-  async createUserCredentials(data: UserCredentialsEntity) {
-    const response = await this.create(JSON.stringify(data))
+  async createUserCredentials(data: UserCredentialsPayloadEntity) {
+    const response = await this.create(
+      JSON.stringify({ data })
+    );
     return response.data;
   };
 
@@ -32,5 +34,5 @@ class UserCredentialsRepositoryClass extends StrapiRepository<UserCredentialsEnt
   }
 }
 
-const SuerCredentialsRepository = new UserCredentialsRepositoryClass();
-export default SuerCredentialsRepository
+const UserCredentialsRepository = new UserCredentialsRepositoryClass();
+export default UserCredentialsRepository;

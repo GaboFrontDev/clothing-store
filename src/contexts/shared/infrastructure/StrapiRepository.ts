@@ -56,8 +56,10 @@ export class StrapiRepository<T> {
     if (!payload) {
       throw new Error(`Missing required payload param`);
     }
-    const res = await strapiRequest(`${this.endpoint}`, "POST", payload);
+    const res = await strapiRequest(`${this.endpoint}s`, "POST", payload);
     if (!res.ok) {
+      console.log(res.statusText);
+      
       throw new Error(`${new Date()}: Create failed`);
     }
     return (await res.json()) as StrapiSingleItemResponseEntity<T>;

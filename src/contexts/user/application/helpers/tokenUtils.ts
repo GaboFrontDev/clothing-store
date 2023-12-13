@@ -82,18 +82,19 @@ export function generateHashPassword(
   });
 }
 
-export async function generateAuthenticationToken(userId: string) {
+export async function generateAuthenticationToken() {
   if (!privateKey.length) {
     console.log("Error: setup a JWT_SECRET in ENV");
   }
   const iat = Math.floor(Date.now() / 1000);
   const exp = iat + 60 * 10; // ten minutes
   const token = await new SignJWT({
-    data: {
-      userId,
-    },
+    data: {},
   })
-    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setProtectedHeader({
+      alg: "HS256",
+      typ: "JWT",
+    })
     .setExpirationTime(exp)
     .setIssuedAt(iat)
     .setNotBefore(iat)

@@ -15,7 +15,7 @@ export function strapiRequest(url: string, method: 'GET' | 'POST' | 'PUT' = 'GET
         });
     }
     console.log(`Calling ${method}: ${CONFIG.STRAPI_URL}/${url}`);
-    return fetch(url, {
+    return fetch(`${CONFIG.STRAPI_URL}/${url}`, {
         ...options,
         body: payload
     });

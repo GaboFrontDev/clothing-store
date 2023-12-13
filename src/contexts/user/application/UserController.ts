@@ -1,4 +1,4 @@
-import { UserCredentialsEntity, UserPayloadEntity } from "../domain/UserEntity";
+import { UserCredentialsPayloadEntity, UserEntity, UserPayloadEntity } from "../domain/UserEntity";
 import { generateAuthenticationToken, generateHashPassword } from "./helpers/tokenUtils";
 import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
@@ -9,12 +9,7 @@ export class UserController {
     constructor() {
     }
 
-    private async sendVerificationEmail(email: string, token: string) {
-        return await sendVerificationEmail(email, token);
-    }
-
-
-    async createUser(data: UserPayloadEntity, authenticationData: Omit<UserCredentialsEntity, 'salt' | 'autentication_token'>): Promise<UserPayloadEntity> {
+    async createUser(data: UserPayloadEntity, passwordData: string): Promise<UserEntity> {
         try {
             const development = process.env["NODE_ENV"] == "development";
             const emailCheckResponse = emailResponseHandler(
@@ -25,26 +20,31 @@ export class UserController {
                 throw Error("Verify your email address");
             }
 
-            const { hash, salt } = await generateHashPassword(authenticationData.password);
-            const {id, attributes: userAttributes} = await UserRepository.createUser(data);
-            const verification_token = await generateAuthenticationToken(id as string);
-            const userCredentialsData = {
-                password: hash,
-                user_account: id,
-                verification_token,
-                salt
+            const { hash, salt } = await generateHashPassword(passwordData);
+            const verification_token = await generateAuthenticationToken();
+            const userCredentialsData: UserCredentialsPayloadEntity = {
+              password: hash,
+              verification_token,
+              salt,
             };
 
-            await UserCredentialsRepository.createUserCredentials(userCredentialsData);
-            await this.sendVerificationEmail(verification_token, userAttributes.email);
+            const credentialsRecord = await UserCredentialsRepository.createUserCredentials(userCredentialsData);
+            const { attributes: userAttributes } =
+              await UserRepository.createUser({
+                ...data,
+                user_credential:
+                  credentialsRecord.id as number,
+              });
+            await sendVerificationEmail(userAttributes.email, verification_token);
 
             return userAttributes;
         } catch (error) {
+            console.log(error);
             throw Error('Cannot create user');
         }
     }
 
-    async updateUserData(data: UserPayloadEntity, id: string) {
+    async updateUserData(data: UserEntity, id: string) {
 
         try {
             const userData = await UserRepository.getUserByEmail(data.email);
@@ -55,5 +55,13 @@ export class UserController {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    async createUserCredentials(data: UserCredentialsPayloadEntity){
+        const credentialsData =
+          await UserCredentialsRepository.createUserCredentials(
+            data
+          );
+        return credentialsData;
     }
 }
