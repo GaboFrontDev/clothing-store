@@ -1,6 +1,8 @@
 import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiRepository";
-import { UserEntity, UserPayloadEntity, UserStrapiPayloadEntity } from "../domain/UserEntity";
-import { StrapiSingleItemResponseEntity } from "@/contexts/shared/domain/StrapiSingleItemResponseEntity";
+import {
+  UserEntity,
+  UserStrapiPayloadEntity,
+} from "../domain/UserEntity";
 
 class UserRepositoryClass extends StrapiRepository<UserEntity> {
   constructor() {
@@ -20,10 +22,12 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
     return response.data;
   }
 
-  async getUserByEmail(
-    email: string
-  ) {
-    return await this.getSingleItem(email);
+  async getUserByEmail(email: string) {
+    try {
+      return await this.get(`?populate=*&filters[email][$eq]=${email}`);
+    } catch(error) {
+      return {data: []}
+    }
   }
 
   async updateAccountVerificationToken(
