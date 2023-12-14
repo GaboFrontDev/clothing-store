@@ -9,9 +9,17 @@ export class UserController {
     constructor() {
     }
 
-    async createUser(data: UserPayloadEntity, passwordData: string): Promise<UserEntity> {
+    async createUser(data: UserPayloadEntity, passwordData: string) {
         try {
             const development = process.env["NODE_ENV"] == "development";
+            const userExists = (await UserRepository.getUserByEmail(data.email)).data.length > 0;
+
+            if(userExists){
+                console.log("User already exits");
+                
+                throw Error("User already exists"); 
+            }
+            
             const emailCheckResponse = emailResponseHandler(
                 await isEmailValid(data.email)
             );
@@ -29,15 +37,15 @@ export class UserController {
             };
 
             const credentialsRecord = await UserCredentialsRepository.createUserCredentials(userCredentialsData);
-            const { attributes: userAttributes } =
+            const user =
               await UserRepository.createUser({
                 ...data,
                 user_credential:
                   credentialsRecord.id as number,
               });
-            await sendVerificationEmail(userAttributes.email, verification_token);
+            await sendVerificationEmail(user.attributes.email, verification_token);
 
-            return userAttributes;
+            return user;
         } catch (error) {
             console.log(error);
             throw Error('Cannot create user');
@@ -47,8 +55,8 @@ export class UserController {
     async updateUserData(data: UserEntity, id: string) {
 
         try {
-            const userData = await UserRepository.getUserByEmail(data.email);
-            if (userData.data.id != id) {
+            const userData = (await UserRepository.getUserByEmail(data.email)).data[0];
+            if (userData.id != id) {
                 throw Error('Email is not the same from the original account');
             }
             await UserRepository.updateAccountData(data, id);
