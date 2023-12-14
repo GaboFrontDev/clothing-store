@@ -14,11 +14,6 @@ class UserCredentialsRepositoryClass extends StrapiRepository<UserCredentialsEnt
     return response.data;
   };
 
-  async getUserByEmail(email: string) {
-    const response = await this.getSingleItem(email);
-    return response.data.attributes;
-  }
-
   async updateAccountVerificationToken(token: string, userId: string) {
     const response = await this.update(JSON.stringify({
       verification_token: token
