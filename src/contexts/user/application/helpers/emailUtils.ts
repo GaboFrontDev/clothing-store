@@ -1,7 +1,7 @@
 import { transporter } from "@/utils/mailer";
 import { EMAIL_ERROR_RESPONSE } from "./emailExists";
 
-const verificationPage = "https://wwww.telluridedigitalworks.com/verified?token="
+const verificationPage = "https://wwww.telluridedigitalworks.com/verify?t="
 
 export async function sendVerificationEmail(email: string, token: string, returnUrl = 'login') {
   try {
