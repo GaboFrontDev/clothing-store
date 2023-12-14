@@ -1,31 +1,33 @@
 import UserRepository from "../infrastructure/UserRepository";
-import { createLoginToken, verifyPassword } from "./helpers/tokenUtils";
+import {
+  createLoginToken,
+  verifyPassword,
+} from "./helpers/tokenUtils";
 
 export class UserLoginController {
-    constructor() {
-    }
+  constructor() {}
 
-    async getLoginTokenOrFail(data: LoginEntity) {
-        const user = await UserRepository.getUserByEmail(data.email);
-        const verified = await verifyPassword(
-            {
-                hash: user.password,
-                salt: user.salt,
-            },
-            data.password
-        );
-        if (!verified) {
-            throw Error('authentication failed');
-        }
-        const token = await createLoginToken({
-            email: user.email,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            address: user.address,
-            phone: user.phone,
-            verified: user.verified,
-        });
-        return token;
+  async getLoginTokenOrFail(data: LoginEntity) {
+    const user = (
+      await UserRepository.getUserByEmail(
+        data.email
+      )
+    ).data[0];
+    const credentials =
+      user.attributes.user_credential;
+    const verified = await verifyPassword(
+      {
+        hash: credentials.attributes.password,
+        salt: credentials.attributes.salt,
+      },
+      data.password
+    );
+    if (!verified) {
+      throw Error("authentication failed");
     }
-
+    const token = await createLoginToken({
+      ...user.attributes,
+    });
+    return token;
+  }
 }
