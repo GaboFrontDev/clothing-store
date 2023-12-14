@@ -57,7 +57,7 @@ export async function createUserAction(
       );
 
       const sucessObject =
-        createSuccessObject(user);
+        createSuccessObject(user.attributes);
       return NextResponse.json({
         sucessObject,
         status: 201,
