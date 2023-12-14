@@ -48,6 +48,8 @@ export default function LoginPage(
             <Input
               name="email"
               placeholder="example@domain.com"
+              required
+              type="email"
             />
           </div>
           <div className="flex items-center w-full">

@@ -2,6 +2,7 @@ import Buttons from "@/components/Buttons";
 import Form from "@/components/Form";
 import { Input } from "@/components/Input";
 import { createUserAction } from "@/contexts/user/application/actions/createUser";
+import { cookies } from "next/headers";
 
 interface PageProps {
   searchParams: {
@@ -12,6 +13,8 @@ interface PageProps {
 export default async function SingUpPage(
   props: PageProps
 ) {
+  const cookieStore = cookies();
+
   const {
     searchParams: { email },
   } = props;
@@ -27,14 +30,34 @@ export default async function SingUpPage(
     };
     const initalPassword = "demo";
     try {
-        await createUserAction(
-          undefined,
-          defaultUser,
-          initalPassword
-        );
+      const user = await createUserAction(
+        undefined,
+        defaultUser,
+        initalPassword
+      );
+      if (!user) {
+        return <>Something went wrong :(</>;
+      }
+      if ("id" in user) {
+        user.id;
+      }
+    } catch (error) {
+      console.log(`${new Date().toString()}: Create user error ${error}`);
+      return (
+        <>
+          This email is already in use, please
+          login
+          <div className="flex flex-col justify-center text-lg py-10 hover:underline">
+            <Buttons.Link
+              href="/login"
+              className="bg-transparent text-center"
+            >
+              I already have an account
+            </Buttons.Link>
+          </div>
+        </>
+      );
 
-    } catch (error){ 
-        console.log(error);
     }
 
     return (
@@ -68,6 +91,8 @@ export default async function SingUpPage(
             <Input
               name="email"
               placeholder="example@domain.com"
+              required
+              type="email"
             />
           </div>
           <div className="flex items-center w-full">
