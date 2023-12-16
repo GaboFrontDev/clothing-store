@@ -13,17 +13,21 @@ export async function validateUserAction(
       await UserCredentialsRepository.getById(
         credentialUUID
       );
+    
     const parsedToken =
       await parseCredentialsTokenOrFail(
         credentials.attributes
           .verification_token as string
       );
+    
     const user = await UserRepository.getUserById(
-      parsedToken.user_id
+      parsedToken.id
     );
+    console.log({user});
+    
     const result = verifyUser(
       user.data[0].attributes,
-      parsedToken.user_id,
+      parsedToken.id,
       credentials.attributes
         .verification_token as string
     );
@@ -33,6 +37,8 @@ export async function validateUserAction(
       user,
     };
   } catch (error) {
-    throw error;
+    return {
+      result: false
+    };
   }
 }
