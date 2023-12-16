@@ -12,7 +12,7 @@ export async function sendVerificationEmail(email: string, token: string, return
         subject: "Verify your email",
         text:
           "Please confirm your email by clicking on this link: \n" +
-          `<a href='${verificationPage}${token}?from=${returnUrl}'>Verify my account</a> `,
+          `<a href='${verificationPage}${token}&from=${returnUrl}'>Verify my account</a> `,
       };
       const sendCallback = function (err: any) {
         if (err) {
