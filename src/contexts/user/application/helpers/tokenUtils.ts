@@ -82,7 +82,7 @@ export function generateHashPassword(
   });
 }
 
-export async function generateAuthenticationToken() {
+export async function  generateAuthenticationToken() {
   if (!privateKey.length) {
     console.log("Error: setup a JWT_SECRET in ENV");
   }
@@ -90,6 +90,28 @@ export async function generateAuthenticationToken() {
   const exp = iat + 60 * 10; // ten minutes
   const token = await new SignJWT({
     data: {},
+  })
+    .setProtectedHeader({
+      alg: "HS256",
+      typ: "JWT",
+    })
+    .setExpirationTime(exp)
+    .setIssuedAt(iat)
+    .setNotBefore(iat)
+    .sign(new TextEncoder().encode(privateKey));
+  return token;
+}
+
+export async function generateVerificationToken(user_id:string) {
+  if (!privateKey.length) {
+    console.log("Error: setup a JWT_SECRET in ENV");
+  }
+  const iat = Math.floor(Date.now() / 1000);
+  const exp = iat + 60 * 10; // ten minutes
+  const token = await new SignJWT({
+    data: {
+      id: user_id
+    },
   })
     .setProtectedHeader({
       alg: "HS256",

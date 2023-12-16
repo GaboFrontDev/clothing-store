@@ -74,7 +74,7 @@ export class StrapiRepository<T> {
         `Missing required payload or id param, values: ${payload} ${id}`
       );
     }
-    const res = await strapiRequest(`${this.endpoint}/${id}`, "PUT", payload);
+    const res = await strapiRequest(`${this.endpoint}s/${id}`, "PUT", payload);
     if (!res.ok) {
       throw new Error(`${new Date()}: Update failed`);
     }

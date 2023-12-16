@@ -1,5 +1,5 @@
 import { UserCredentialsPayloadEntity, UserEntity, UserPayloadEntity } from "../domain/UserEntity";
-import { generateAuthenticationToken, generateHashPassword } from "./helpers/tokenUtils";
+import { generateAuthenticationToken, generateHashPassword, generateVerificationToken } from "./helpers/tokenUtils";
 import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
 import UserCredentialsRepository from "../infrastructure/UserCredentialsRepository";
@@ -29,21 +29,32 @@ export class UserController {
             }
 
             const { hash, salt } = await generateHashPassword(passwordData);
-            const verification_token = await generateAuthenticationToken();
             const userCredentialsData: UserCredentialsPayloadEntity = {
               password: hash,
-              verification_token,
+              verification_token: "",
               salt,
             };
-
+            
             const credentialsRecord = await UserCredentialsRepository.createUserCredentials(userCredentialsData);
             const user =
-              await UserRepository.createUser({
+            await UserRepository.createUser({
                 ...data,
                 user_credential:
-                  credentialsRecord.id as number,
-              });
-            await sendVerificationEmail(user.attributes.email, verification_token);
+                credentialsRecord.id as number,
+            });
+            const verification_token =
+              await generateVerificationToken(
+                credentialsRecord.id as string
+              );
+
+            await UserCredentialsRepository.updateAccountVerificationToken(
+              verification_token,
+              credentialsRecord.id as string
+            );
+            await sendVerificationEmail(
+              user.attributes.email,
+              credentialsRecord.id as string
+            );
 
             return user;
         } catch (error) {
