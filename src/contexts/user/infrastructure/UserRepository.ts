@@ -30,6 +30,15 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
     }
   }
 
+  async getUserById(id: string) {
+    try {
+      return await this.get(`${id}?populate=*`);
+    } catch(error) {
+      return {data: []}
+    }
+  }
+
+
   async updateAccountVerificationToken(
     token: string,
     userId: string
