@@ -3,7 +3,7 @@ export class CookieError extends Error {
       "Please provide a 'String', 'Uint8Array' or 'Array'.";
   
     constructor(
-      public message = "Message not provided"
+      public message = "Cookies error happened"
     ) {
       super(message);
       this.name = "UnexpectedCookie";

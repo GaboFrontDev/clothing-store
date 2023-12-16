@@ -53,13 +53,11 @@ export default async function CartProductPage(
     }
 
     if(error instanceof CookieError) {
-      console.log("@");
-
+      throw Error("CookieError not implemented");
     }
 
     if(error instanceof CookieCartError) {
-      console.log("A");
-
+      throw Error("CookieCartError handler not implemented");
     }
   }
 
