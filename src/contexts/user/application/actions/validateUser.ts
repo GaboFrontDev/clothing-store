@@ -6,12 +6,12 @@ import parseCredentialsTokenOrFail from "../helpers/isAuthorized";
 const { verifyUser } = new UserController();
 
 export async function validateUserAction(
-  credentialId: string
+  credentialUUID: string
 ) {
   try {
     const credentials =
       await UserCredentialsRepository.getById(
-        credentialId
+        credentialUUID
       );
     const parsedToken =
       await parseCredentialsTokenOrFail(
