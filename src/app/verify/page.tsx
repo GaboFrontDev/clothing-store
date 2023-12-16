@@ -1,10 +1,11 @@
 import Buttons from "@/components/Buttons";
+import { resendUserTokenAction } from "@/contexts/user/application/actions/resendUserToken";
 import { validateUserAction } from "@/contexts/user/application/actions/validateUser";
 
 interface PageProps {
   searchParams: {
     i: string;
-    r: string
+    r: string;
   };
 }
 
@@ -12,30 +13,39 @@ export default async function VerifyPage(
   props: PageProps
 ) {
   const {
-    searchParams: { i: credentialUUID },
+    searchParams: {
+      i: credentialUUID,
+      r: retryCredentialID,
+    },
   } = props;
+  if(retryCredentialID) {
+    await resendUserTokenAction(retryCredentialID);
+    return <>A new link has been send to your mailbox</>;
+  }
   try {
-    const {user, result: validated} = (await validateUserAction(credentialUUID));
-    if(!validated) {
+    const { user, result: validated } =
+      await validateUserAction(credentialUUID);
+    if (!validated) {
       return (
         <>
-          Link has expired, please{" "}
+          Link has expired,{" "}
           <Buttons.Link
-            href={`/verify?r${user.data[0].id}`}
+            className="bg-transparent hover:underline p-0 m-0"
+            href={`/verify?r${credentialUUID}`}
           >
-            click here
+            please click here
           </Buttons.Link>{" "}
-          to receive another one
+          to receive another one to your mailbox
         </>
       );
-
     }
-
-    
   } catch (error) {
-    console.log("Error happened at token validation");
-
+    console.log(
+      "Error happened at token validation"
+    );
+    console.log(error);
+    
   }
 
-  return <></>;
+  return <>Hi!</>;
 }

@@ -11,6 +11,16 @@ export class UserController {
     constructor() {
     }
 
+    async checkUserExists(userId?: string, credentialUUID?: string) {
+      let user = null;
+      if(userId){
+        user = (await UserRepository.getUserById(userId)).data.length > 0;
+      } else if(credentialUUID) {
+        user = (await UserRepository.getUserByCredentialId(credentialUUID)).data.length > 0;
+      }
+      return !!user;
+    }
+
     async createUser(data: UserPayloadEntity, passwordData: string) {
         try {
             const development = process.env["NODE_ENV"] == "development";
@@ -65,6 +75,37 @@ export class UserController {
             console.log(error);
             throw Error('Cannot create user');
         }
+    }
+
+    async updateUserValidationTokenAndSendEmail(credentialId: string){
+      try {
+        const credentialsRecord = await UserCredentialsRepository.getById(credentialId);
+        const userRecord = (
+          await UserRepository.getUserByCredentialId(
+            credentialId
+          )
+        ).data[0];
+  
+        const verification_token =
+        await generateVerificationToken(
+          userRecord.id as string
+        );
+  
+        UserCredentialsRepository.updateAccountVerificationToken(
+          verification_token,
+          credentialsRecord.id as string
+        );
+
+        await sendVerificationEmail(
+          userRecord.attributes.email,
+          credentialsRecord.attributes
+            .uuid as string
+        );
+
+        
+      } catch (error) {
+        
+      }
     }
 
     async verifyUser(data: UserEntity, id: string, token: string) {

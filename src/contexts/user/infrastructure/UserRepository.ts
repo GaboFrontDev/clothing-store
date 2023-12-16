@@ -30,9 +30,17 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
     }
   }
 
+  async getUserByCredentialId(credentialId: string) {
+    try {
+      return await this.get(`?populate=*&filter[credential][id][$eq]=${credentialId}`);
+    } catch(error) {
+      return {data: []}
+    }
+  }
+
   async getUserById(id: string) {
     try {
-      return await this.get(`${id}?populate=*`);
+      return await this.get(`/${id}?populate=*`);
     } catch(error) {
       return {data: []}
     }
