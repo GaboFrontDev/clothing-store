@@ -32,9 +32,9 @@ class UserCredentialsRepositoryClass extends StrapiRepository<UserCredentialsEnt
     return response;
   }
 
-  async getById(id: string) {
+  async getById(uuid: string) {
     return (
-      await this.getByQuery(`/${id}?populate=*`)
+      await this.getByQuery(`?populate=*&filter=[uuid][$eq]=${uuid}`)
     ).data[0];
   }
 }

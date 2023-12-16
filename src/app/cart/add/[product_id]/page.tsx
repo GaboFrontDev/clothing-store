@@ -48,7 +48,7 @@ export default async function CartProductPage(
     if(error instanceof AuthenticationError) {
       console.log({error});
       redirect(
-        `/login?rediect_to=cart_add_${product_id}`
+        `/login?redirect_to=cart_add_${product_id}`
       );
     }
 
