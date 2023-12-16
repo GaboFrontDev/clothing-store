@@ -2,7 +2,7 @@ import CONFIG from "@/config";
 import { jwtVerify } from "jose";
 
 interface AuthorizationResponse {
-  user_id: string
+  id: string
 }
 
 async function parseCredentialsTokenOrFail(token: string): Promise<AuthorizationResponse> {
