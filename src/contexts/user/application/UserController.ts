@@ -4,6 +4,8 @@ import { emailResponseHandler, isEmailValid } from "./helpers/emailExists";
 import UserRepository from "../infrastructure/UserRepository";
 import UserCredentialsRepository from "../infrastructure/UserCredentialsRepository";
 import { sendVerificationEmail } from "../application/helpers/emailUtils";
+import parseCredentialsTokenOrFail from "./helpers/isAuthorized";
+import { randomUUID } from "crypto";
 
 export class UserController {
     constructor() {
@@ -33,6 +35,7 @@ export class UserController {
               password: hash,
               verification_token: "",
               salt,
+              uuid: randomUUID()
             };
             
             const credentialsRecord = await UserCredentialsRepository.createUserCredentials(userCredentialsData);
@@ -53,7 +56,8 @@ export class UserController {
             );
             await sendVerificationEmail(
               user.attributes.email,
-              credentialsRecord.id as string
+              credentialsRecord.attributes
+                .uuid as string
             );
 
             return user;
@@ -63,8 +67,22 @@ export class UserController {
         }
     }
 
-    async updateUserData(data: UserEntity, id: string) {
+    async verifyUser(data: UserEntity, id: string, token: string) {
+      try {
+        // challenge token...
+        const authorized = await parseCredentialsTokenOrFail(token);
+        if(!authorized){
+          throw Error("Cannot validate token");
+        }
+        await UserRepository.updateAccountData({...data, verified: true}, id);
+        return true;
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
 
+    async updateUserData(data: UserEntity, id: string) {
         try {
             const userData = (await UserRepository.getUserByEmail(data.email)).data[0];
             if (userData.id != id) {
