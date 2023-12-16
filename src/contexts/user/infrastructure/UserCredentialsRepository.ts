@@ -31,6 +31,12 @@ class UserCredentialsRepositoryClass extends StrapiRepository<UserCredentialsEnt
     const response = this.update(JSON.stringify(data), id);
     return response;
   }
+
+  async getById(id: string) {
+    return (
+      await this.getByQuery(`/${id}?populate=*`)
+    ).data[0];
+  }
 }
 
 const UserCredentialsRepository = new UserCredentialsRepositoryClass();
