@@ -42,7 +42,9 @@ export default async function SingUpPage(
         user.id;
       }
     } catch (error) {
-      console.log(`${new Date().toString()}: Create user error ${error}`);
+      console.log(
+        `${new Date().toString()}: Create user error ${error}`
+      );
       return (
         <>
           This email is already in use, please
@@ -57,7 +59,6 @@ export default async function SingUpPage(
           </div>
         </>
       );
-
     }
 
     return (
