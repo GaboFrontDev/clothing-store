@@ -23,20 +23,24 @@ export async function validateUserAction(
     const user = await UserRepository.getUserById(
       parsedToken.id
     );
+    console.log("Validating user");
     console.log({user});
     
-    const result = verifyUser(
-      user.data[0].attributes,
-      parsedToken.id,
-      credentials.attributes
-        .verification_token as string
+    const result = await verifyUser(
+      user.data.attributes,
+      parsedToken.id
     );
+
+    console.log({result});
+    
 
     return {
       result,
       user,
     };
   } catch (error) {
+    console.log(error);
+    
     return {
       result: false
     };

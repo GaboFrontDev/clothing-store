@@ -12,6 +12,7 @@ async function parseCredentialsTokenOrFail(token: string): Promise<Authorization
     result = await jwtVerify(token, new TextEncoder().encode(privateKey));
   } catch (error) {
     console.log("not authorized");
+    console.log(error);
     throw error;
   }
   if(!result){ 

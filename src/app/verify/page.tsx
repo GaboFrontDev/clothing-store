@@ -19,8 +19,24 @@ export default async function VerifyPage(
     },
   } = props;
   if(retryCredentialID) {
-    await resendUserTokenAction(retryCredentialID);
-    return <>A new link has been send to your mailbox</>;
+    try {
+      await resendUserTokenAction(retryCredentialID);
+      return <>A new link has been send to your mailbox</>;
+    } catch(error) {
+      return (
+        <>
+          Your account is already verified,{" "}
+          <Buttons.Link
+            className="bg-transparent hover:underline p-0 m-0"
+            href={`/login?i=${credentialUUID}`}
+          >
+            please click here
+          </Buttons.Link>{" "}
+          to login
+        </>
+      );
+
+    }
   }
   try {
     const { user, result: validated } =
@@ -31,7 +47,7 @@ export default async function VerifyPage(
           Link has expired,{" "}
           <Buttons.Link
             className="bg-transparent hover:underline p-0 m-0"
-            href={`/verify?r${credentialUUID}`}
+            href={`/verify?r=${credentialUUID}`}
           >
             please click here
           </Buttons.Link>{" "}

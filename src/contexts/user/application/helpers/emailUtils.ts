@@ -1,7 +1,7 @@
 import { transporter } from "@/utils/mailer";
 import { EMAIL_ERROR_RESPONSE } from "./emailExists";
 
-const verificationPage = "https://wwww.telluridedigitalworks.com/verify?t="
+const verificationPage = "https://wwww.telluridedigitalworks.com/verify?i="
 
 export async function sendVerificationEmail(email: string, token: string, returnUrl = 'login') {
   try {
@@ -31,6 +31,8 @@ export async function sendVerificationEmail(email: string, token: string, return
     });
     return res;
   } catch (error) {
-    return false;
+    console.log("Cannot send email for verification");
+    
+    throw error;
   }
 }

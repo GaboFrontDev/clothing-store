@@ -3,7 +3,7 @@ import { UserLoginController } from "../UserLoginController";
 
 const { getLoginTokenOrFail } = new UserLoginController();
 
-export async function loginUserAction(req: NextRequest) {
+export async function loginUserAction(req: NextRequest, cookies?: any) {
     try {
         const data = await req.json() as unknown as LoginEntity;
         const token = await getLoginTokenOrFail(data) as any;

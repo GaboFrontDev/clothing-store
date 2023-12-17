@@ -14,7 +14,9 @@ export class UserController {
     async checkUserExists(userId?: string, credentialUUID?: string) {
       let user = null;
       if(userId){
-        user = (await UserRepository.getUserById(userId)).data.length > 0;
+        user = (
+          await UserRepository.getUserById(userId)
+        ).data;
       } else if(credentialUUID) {
         user = (await UserRepository.getUserByCredentialId(credentialUUID)).data.length > 0;
       }
@@ -85,13 +87,16 @@ export class UserController {
             credentialId
           )
         ).data[0];
+        if(userRecord.attributes.verified) {
+          throw Error("User already verified, send to login");
+        }
   
         const verification_token =
         await generateVerificationToken(
           userRecord.id as string
         );
-  
-        UserCredentialsRepository.updateAccountVerificationToken(
+          
+        await UserCredentialsRepository.updateAccountVerificationToken(
           verification_token,
           credentialsRecord.id as string
         );
@@ -104,22 +109,25 @@ export class UserController {
 
         
       } catch (error) {
-        
+        throw error
       }
     }
 
-    async verifyUser(data: UserEntity, id: string, token: string) {
+    async verifyUser(data: UserEntity, id: string) {
+      console.log({data, id});
+      
       try {
         // challenge token...
-        const authorized = await parseCredentialsTokenOrFail(token);
-        if(!authorized){
-          throw Error("Cannot validate token");
-        }
-        await UserRepository.updateAccountData({...data, verified: true}, id);
+        console.log("User validation started");
+        
+        await UserRepository.updateAccountData(
+          { verified: true },
+          id
+        );
         return true;
       } catch (error) {
         console.log(error);
-        
+        return false;
       }
     }
 

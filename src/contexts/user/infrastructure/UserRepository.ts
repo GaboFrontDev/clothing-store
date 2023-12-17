@@ -3,6 +3,7 @@ import {
   UserEntity,
   UserStrapiPayloadEntity,
 } from "../domain/UserEntity";
+import { StrapiSingleItemResponseEntity } from "@/contexts/shared/domain/StrapiSingleItemResponseEntity";
 
 class UserRepositoryClass extends StrapiRepository<UserEntity> {
   constructor() {
@@ -24,28 +25,35 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
 
   async getUserByEmail(email: string) {
     try {
-      return await this.get(`?populate=*&filters[email][$eq]=${email}`);
-    } catch(error) {
-      return {data: []}
+      return await this.get(
+        `?populate=*&filters[email][$eq]=${email}`
+      );
+    } catch (error) {
+      return { data: [] };
     }
   }
 
-  async getUserByCredentialId(credentialId: string) {
+  async getUserByCredentialId(
+    credentialId: string
+  ) {
     try {
-      return await this.get(`?populate=*&filter[credential][id][$eq]=${credentialId}`);
-    } catch(error) {
-      return {data: []}
+      return await this.get(
+        `?populate=*&filter[credential][id][$eq]=${credentialId}`
+      );
+    } catch (error) {
+      return { data: [] };
     }
   }
 
   async getUserById(id: string) {
     try {
-      return await this.get(`/${id}?populate=*`);
-    } catch(error) {
-      return {data: []}
+      return await this.getSingleItem(
+        `/${id}?populate=*`
+      );
+    } catch (error) {
+      throw error;
     }
   }
-
 
   async updateAccountVerificationToken(
     token: string,
@@ -62,11 +70,11 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
   }
 
   async updateAccountData(
-    data: UserEntity,
+    data: UserEntity | any,
     id: string
   ) {
-    const response = this.update(
-      JSON.stringify(data),
+    const response = await this.update(
+      JSON.stringify({ data }),
       id
     );
     return response;

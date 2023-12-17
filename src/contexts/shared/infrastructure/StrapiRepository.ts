@@ -24,7 +24,7 @@ export class StrapiRepository<T> {
     if (!query) {
       throw new Error(`Missing required query param`);
     }
-    const res = await strapiRequest(`${this.endpoint}${query}`);
+    const res = await strapiRequest(`${this.endpoint}s${query}`);
     if (!res.ok) {
       throw new Error(
         `${new Date()}: Query to ${
@@ -76,7 +76,7 @@ export class StrapiRepository<T> {
     }
     const res = await strapiRequest(`${this.endpoint}s/${id}`, "PUT", payload);
     if (!res.ok) {
-      throw new Error(`${new Date()}: Update failed`);
+      throw new Error(`${new Date()}: Update failed with message ${res.statusText}`);
     }
     return (await res.json()) as StrapiSingleItemResponseEntity<T>;
   }
