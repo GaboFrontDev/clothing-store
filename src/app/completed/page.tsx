@@ -10,5 +10,13 @@ export default function CompletedPage(props: PageProps) {
     const {
       searchParams: { sid: session_id },
     } = props;
-    return <>Hi</>;
+    return (
+      <>
+        <h1 className="text-4xl">Muchas gracias por su compra</h1>
+        <p className="text-xl py-10"> 
+          Recibirás actualizaciones por correo electrónico con
+          la guía de envío
+        </p>
+      </>
+    );
 }

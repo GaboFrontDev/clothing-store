@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Paloma Hernandez",
-  description: "La natura en nuestra principal inspiracion",
+  description: "Clothing | Naturaleza, inspiracion",
 };
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className="px-2 md:px-6">
         <Nav />
         {children}
