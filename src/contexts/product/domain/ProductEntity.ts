@@ -11,6 +11,7 @@ export interface ProductEntity {
   name: string;
   size: StrapiEntryEntity<SizeEntity>;
   description: string,
+  pay_url: string,
   photos: {
     data: StrapiMediaEntity[];
   };
