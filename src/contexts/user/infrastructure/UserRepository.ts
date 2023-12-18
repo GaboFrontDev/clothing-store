@@ -4,6 +4,7 @@ import {
   UserStrapiPayloadEntity,
 } from "../domain/UserEntity";
 import { StrapiSingleItemResponseEntity } from "@/contexts/shared/domain/StrapiSingleItemResponseEntity";
+import { UserExistsError } from "@/utils/errors/UserExistsError";
 
 class UserRepositoryClass extends StrapiRepository<UserEntity> {
   constructor() {
@@ -29,7 +30,7 @@ class UserRepositoryClass extends StrapiRepository<UserEntity> {
         `?populate=*&filters[email][$eq]=${email}`
       );
     } catch (error) {
-      return { data: [] };
+      throw new UserExistsError();
     }
   }
 

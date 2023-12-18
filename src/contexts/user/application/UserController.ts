@@ -6,6 +6,8 @@ import UserCredentialsRepository from "../infrastructure/UserCredentialsReposito
 import { sendVerificationEmail } from "../application/helpers/emailUtils";
 import parseCredentialsTokenOrFail from "./helpers/isAuthorized";
 import { randomUUID } from "crypto";
+import { UserExistsError } from "@/utils/errors/UserExistsError";
+import { UserNotVerifiedError } from "@/utils/errors/UserNotVerified";
 
 export class UserController {
     constructor() {
@@ -26,12 +28,18 @@ export class UserController {
     async createUser(data: UserPayloadEntity, passwordData: string) {
         try {
             const development = process.env["NODE_ENV"] == "development";
-            const userExists = (await UserRepository.getUserByEmail(data.email)).data.length > 0;
+            const existingUser = (await UserRepository.getUserByEmail(data.email)).data;
 
-            if(userExists){
+            if(existingUser){
                 console.log("User already exits");
                 
-                throw Error("User already exists"); 
+                if(!existingUser[0].attributes.verified) {
+                  console.log("User not verified");
+                  throw new UserNotVerifiedError(
+                    "Cannot create user, user exists but not verified"
+                  );
+                }
+                throw new UserExistsError("User already exists error"); 
             }
             
             const emailCheckResponse = emailResponseHandler(
@@ -75,7 +83,7 @@ export class UserController {
             return user;
         } catch (error) {
             console.log(error);
-            throw Error('Cannot create user');
+            throw error;
         }
     }
 
@@ -109,6 +117,8 @@ export class UserController {
 
         
       } catch (error) {
+        console.log(error);
+        
         throw error
       }
     }
@@ -149,5 +159,9 @@ export class UserController {
             data
           );
         return credentialsData;
+    }
+
+    async getUserByEmail(email:string) {
+      return await UserRepository.getUserByEmail(email);
     }
 }

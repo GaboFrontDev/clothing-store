@@ -14,13 +14,13 @@ class UserCredentialsRepositoryClass extends StrapiRepository<UserCredentialsEnt
     return response.data;
   };
 
-  async updateAccountVerificationToken(token: string, userId: string) {
+  async updateAccountVerificationToken(token: string, credentialId: string) {
     const payload = JSON.stringify({
       data: { verification_token: token },
     });
     const response = await this.update(
       payload,
-      userId
+      credentialId
     );
 
     return response;

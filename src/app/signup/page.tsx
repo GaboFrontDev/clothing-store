@@ -2,6 +2,9 @@ import Buttons from "@/components/Buttons";
 import Form from "@/components/Form";
 import { Input } from "@/components/Input";
 import { createUserAction } from "@/contexts/user/application/actions/createUser";
+import { resendUserTokenAction } from "@/contexts/user/application/actions/resendUserToken";
+import { UserExistsError } from "@/utils/errors/UserExistsError";
+import { UserNotVerifiedError } from "@/utils/errors/UserNotVerified";
 import { cookies } from "next/headers";
 
 interface PageProps {
@@ -10,9 +13,7 @@ interface PageProps {
   };
 }
 
-export default async function SingUpPage(
-  props: PageProps
-) {
+export default async function SingUpPage(props: PageProps) {
   const cookieStore = cookies();
 
   const {
@@ -42,23 +43,30 @@ export default async function SingUpPage(
         user.id;
       }
     } catch (error) {
-      console.log(
-        `${new Date().toString()}: Create user error ${error}`
-      );
-      return (
-        <>
-          This email is already in use, please
-          login
-          <div className="flex flex-col justify-center text-lg py-10 hover:underline">
-            <Buttons.Link
-              href="/login"
-              className="bg-transparent text-center"
-            >
-              I already have an account
-            </Buttons.Link>
-          </div>
-        </>
-      );
+      if (error instanceof UserExistsError) {
+        console.log(`${new Date().toString()}: Create user error ${error}`);
+        return (
+          <>
+            This email is already in use, please login
+            <div className="flex flex-col justify-center text-lg py-10 hover:underline">
+              <Buttons.Link
+                href="/login"
+                className="bg-transparent text-center"
+              >
+                I already have an account
+              </Buttons.Link>
+            </div>
+          </>
+        );
+      }
+
+      if (error instanceof UserNotVerifiedError) {
+        try {
+          console.log("Need to resend token");
+          
+          await resendUserTokenAction(undefined, email);
+        } catch (error) {}
+      }
     }
 
     return (
@@ -66,12 +74,11 @@ export default async function SingUpPage(
         <h1 className="text-6xl">Sign Up</h1>
 
         <p className="text-lg py-5">
-          An authentication email has been sent to
-          your mailbox.
+          An authentication email has been sent to your mailbox.
         </p>
         <p className="text-lg py-1">
-          Please review your mailbox and click on
-          the link to authenticate your account
+          Please review your mailbox and click on the link to authenticate your
+          account
         </p>
       </section>
     );
@@ -83,10 +90,7 @@ export default async function SingUpPage(
       <div className="flex flex-col items-center justify-center">
         <Form>
           <div className="flex flex-col justify-center w-full my-2">
-            <label
-              htmlFor="email"
-              className="text-2xl py-4"
-            >
+            <label htmlFor="email" className="text-2xl py-4">
               Email
             </label>
             <Input
@@ -97,10 +101,7 @@ export default async function SingUpPage(
             />
           </div>
           <div className="flex items-center w-full">
-            <Buttons.Button
-              type="submit"
-              className="w-full m-0 my-2"
-            >
+            <Buttons.Button type="submit" className="w-full m-0 my-2">
               Send
             </Buttons.Button>
           </div>
@@ -108,10 +109,7 @@ export default async function SingUpPage(
       </div>
 
       <div className="flex flex-col justify-center text-lg py-10 hover:underline">
-        <Buttons.Link
-          href="/login"
-          className="bg-transparent text-center"
-        >
+        <Buttons.Link href="/login" className="bg-transparent text-center">
           I already have an account
         </Buttons.Link>
       </div>

@@ -20,7 +20,9 @@ export interface UserEntity {
   phone: string;
   verified: boolean;
   email: string;
-  user_credential: StrapiEntryEntity<UserCredentialsEntity>;
+  user_credential: {
+    data: StrapiEntryEntity<UserCredentialsEntity>
+  };
 }
 
 export interface UserPayloadEntity

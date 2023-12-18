@@ -1,4 +1,4 @@
-export class UserExistsError extends Error {
+export class UserNotVerifiedError extends Error {
   
     constructor(
       public message = "User account not verified"
