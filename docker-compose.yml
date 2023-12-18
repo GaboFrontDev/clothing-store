@@ -1,7 +1,7 @@
 version: '3'
 services:
-  frontend:
-    container_name: ${PROJECT_SLUG}_frontend
+  server:
+    container_name: store_server
     build:
       context: .
       dockerfile: ./docker/${ENVIRONMENT}/Dockerfile
@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
     networks:
       - internal
+      - proxy-net
     volumes:
       - ./:/app
       - /app/node_modules
@@ -26,11 +27,11 @@ services:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       NODE_ENV: ${ENVIRONMENT}
-    ports:
-      - 3001:3000
-
 
 networks:
   internal:
-    name: ${PROJECT_SLUG}_internal
+    name: store_internal
     driver: bridge
+  proxy-net:
+    name: store_external
+    external: true

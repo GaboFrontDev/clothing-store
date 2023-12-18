@@ -14,6 +14,13 @@ const nextConfig = {
         port: '1337',
         pathname: '**',
       },
+      {
+        protocol: 'http',
+        hostname: 'store_strapi',
+        port: '1337',
+        pathname: '**',
+      },
+
     ],
   },
 
