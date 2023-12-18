@@ -73,7 +73,7 @@ export default function Carousel(
           <div
             key={`photo-${index}`}
             id={`photo-${index}`}
-            className="rounded-md overflow-hidden ml-[10px] inline-block w-[85vw] md:w-11/12"
+            className="rounded-md overflow-hidden ml-[10px] inline-block w-[85vw] sm:w-9/12 lg:w-10/12"
           >
             <PhotoVisualize
               data={image}

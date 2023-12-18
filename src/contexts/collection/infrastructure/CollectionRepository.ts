@@ -11,7 +11,7 @@ class CollectionRepositoryClass extends StrapiRepository<CollectionEntity> {
     }
 
     public async getByCollectionId(id: string) {
-        return (await this.getSingleItem(`s/${id}?populate=collection_photo&populate=products.photos`)).data;
+        return (await this.getSingleItem(`/${id}?populate=collection_photo&populate=products.photos`)).data;
     }
 }
 
