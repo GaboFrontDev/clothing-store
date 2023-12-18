@@ -67,6 +67,7 @@ export default async function CollectionIdPage(
               key={`product-${index}`}
               href={`${collection_id}/${product.id}`}
               product={product}
+              showPayUrl={true}
             />
           )
         )}

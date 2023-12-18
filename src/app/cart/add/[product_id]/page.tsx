@@ -68,6 +68,7 @@ export default async function CartProductPage(
         href=""
         product={product}
         showAddToCart={false}
+        showPayUrl={false}
       />
     </>
   );

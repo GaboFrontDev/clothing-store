@@ -71,6 +71,7 @@ export default async function ProductsPage(
                     key={`product-${index}`}
                     product={product}
                     href={`products/${product.id}`}
+                    showPayUrl={true}
                   />
                 )
               )}
@@ -92,6 +93,7 @@ export default async function ProductsPage(
                 key={`product-${index}`}
                 product={product}
                 href={`products/${product.id}`}
+                showPayUrl={true}
               />
             ))}
         </div>

@@ -3,6 +3,7 @@ import { StrapiEntryEntity } from "@/contexts/shared/domain/StrapiEntity";
 import { PhotoVisualize } from "./PhotoVisualize";
 import AddToCartButton from "./AddToCartButton";
 import GoToPayButton from "./GoToPay";
+import CONFIG from "@/config";
 
 interface ProductCardProps {
   product: StrapiEntryEntity<ProductEntity>;
@@ -13,6 +14,9 @@ interface ProductCardProps {
 
 export default function ProductCard(props: ProductCardProps) {
   const { product, href, showAddToCart = true, showPayUrl = false } = props;
+
+  const showCartButtonFeature = CONFIG.SHOW_CART_BUTTON;
+  const showGoToFeature = CONFIG.SHOW_GOTO_BUTTON;
 
   return (
     <div className="col-span-1  md:m-3 m-1">
@@ -31,10 +35,12 @@ export default function ProductCard(props: ProductCardProps) {
       <section className="p-4 flex items-center flex-col rounded-b-lg justify-center">
         <p>{product.attributes.name}</p>
         <p>${product.attributes.price} MXN</p>
-        {!showPayUrl && showAddToCart && (
+        {showCartButtonFeature && showAddToCart && (
           <AddToCartButton productId={product.id} />
         )}
-        {showPayUrl && <GoToPayButton url={product.attributes.pay_url} />}
+        {showGoToFeature && showPayUrl && (
+          <GoToPayButton url={product.attributes.pay_url} />
+        )}
       </section>
     </div>
   );
