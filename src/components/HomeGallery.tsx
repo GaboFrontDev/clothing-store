@@ -1,17 +1,15 @@
-import { getProductsAction } from "@/contexts/product/application/actions/getProducts";
 import { PhotoVisualize } from "./PhotoVisualize";
 import { Overlay } from "./Overlay";
+import { StrapiEntryEntity } from "@/contexts/shared/domain/StrapiEntity";
+import { ProductEntity } from "@/contexts/product/domain/ProductEntity";
 
-export async function HomeGallery() {
-  const products = await getProductsAction();
+interface HomeGalleryProps {
+  products: StrapiEntryEntity<ProductEntity>[]
+}
 
-  if (
-    !Array.isArray(products) ||
-    products.length < 1
-  ) {
-    return <>Add products on the admin app 🙊</>;
-  }
+export async function HomeGallery(props: HomeGalleryProps) {
 
+  const { products } = props;
   return (
     <div className="grid grid-cols-6 grid-rows-2">
       {products[0].attributes.photos.data.map(
