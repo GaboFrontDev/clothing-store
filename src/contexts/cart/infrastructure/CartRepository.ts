@@ -1,5 +1,5 @@
+import { OrderEntity } from "@/contexts/order/domain/OrderEntity";
 import { StrapiRepository } from "@/contexts/shared/infrastructure/StrapiRepository";
-import { OrderEntity } from "../domain/OrderEntity";
 
 
 class OrderRepositoryClass extends StrapiRepository<OrderEntity> {

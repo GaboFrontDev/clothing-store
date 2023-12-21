@@ -17,8 +17,8 @@ export class UserLoginController {
       user.attributes.user_credential;
     const verified = await verifyPassword(
       {
-        hash: credentials.attributes.password,
-        salt: credentials.attributes.salt,
+        hash: credentials.data.attributes.password,
+        salt: credentials.data.attributes.salt,
       },
       data.password
     );
