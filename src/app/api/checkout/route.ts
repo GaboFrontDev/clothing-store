@@ -1,5 +1,3 @@
-import { createOrderAction } from "@/contexts/order/application/actions/createOrder";
+import { createOrderAction as handler } from "@/contexts/order/application/actions/createOrder";
 
-const POST = createOrderAction;
-
-export default POST;
+export default handler;
