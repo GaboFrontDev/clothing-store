@@ -3,19 +3,19 @@ import { Route } from "./interfaces";
 
 export const ROUTES: Route[] = [
     {
-        displayValue: 'Básicos',
-        url: '/products?category=basicos'
+        displayValue: 'View Products',
+        url: '/products'
     },
     {
-        displayValue: 'Colección',
+        displayValue: 'Collections',
         url: '/collections'
     },
-    {
-        displayValue: 'Bolsas',
-        url: '/products?category=bolsas'
-    },
-    {
-        displayValue: 'Conóceme',
-        url: '/about'
-    },
+    // {
+    //     displayValue: 'Bolsas',
+    //     url: '/products?category=bolsas'
+    // },
+    // {
+    //     displayValue: 'Conóceme',
+    //     url: '/about'
+    // },
 ]
