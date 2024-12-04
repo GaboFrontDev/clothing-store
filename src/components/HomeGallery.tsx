@@ -1,6 +1,16 @@
 import { getProductsAction } from "@/contexts/product/application/actions/getProducts";
 import { PhotoVisualize } from "./PhotoVisualize";
 import { Overlay } from "./Overlay";
+import { ProductEntity } from "@/contexts/product/domain/ProductEntity";
+import { StrapiEntryEntity } from "@/contexts/shared/domain/StrapiEntity";
+
+
+// function to find product with home flag
+function findHomeProduct(products: StrapiEntryEntity<ProductEntity>[]) {
+  return products.find(
+    (product) => product.attributes.home
+  );
+}
 
 export async function HomeGallery() {
   const products = await getProductsAction();
@@ -12,9 +22,11 @@ export async function HomeGallery() {
     return <>Add products on the admin app 🙊</>;
   }
 
+  const homeProduct = findHomeProduct(products) || products[0];
+
   return (
     <div className="grid grid-cols-6 grid-rows-2">
-      {products[0].attributes.photos.data.map(
+      {homeProduct.attributes.photos.data.map(
         (photo, index) => {
           return (
             <div
