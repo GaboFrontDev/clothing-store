@@ -15,5 +15,5 @@ export interface ProductEntity {
   photos: {
     data: StrapiMediaEntity[];
   };
-  home: boolean;
+  isHome: boolean;
 }

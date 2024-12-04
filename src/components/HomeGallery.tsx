@@ -8,7 +8,7 @@ import { StrapiEntryEntity } from "@/contexts/shared/domain/StrapiEntity";
 // function to find product with home flag
 function findHomeProduct(products: StrapiEntryEntity<ProductEntity>[]) {
   return products.find(
-    (product) => product.attributes.home
+    (product) => product.attributes.isHome
   );
 }
 
